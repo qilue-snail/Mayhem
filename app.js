@@ -316,7 +316,7 @@ function bindHeadlinerPickers(root, selector, commit, sourceBuild=null){
  }));
 }
 function renderComboRows(b){
- return `<div class="combo-stack">${b.augmentCombos.map((c,i)=>`<section class="combo-row ${b.activeComboId===c.id?'active':''}" data-combo-drop="${escapeHtml(c.id)}"><div class="combo-titlebar"><span class="combo-number">${i+1}</span><input class="combo-name" data-combo-rename="${escapeHtml(c.id)}" aria-label="Combo name" value="${escapeHtml(c.name)}">${comboHeadlinerSelect(c)}<button class="btn smallbtn" data-combo-target="${escapeHtml(c.id)}">+ Augments</button>${b.augmentCombos.length>1?`<button class="btn smallbtn danger" data-remove-combo="${escapeHtml(c.id)}" title="Delete combo">×</button>`:''}</div><div class="combo-content ${comboHeadlinerNames(c).length?'has-addon':''}"><div class="combo-picks">${c.augments.map(id=>{const a=getAug(id),sticker=hasComboHeadliner(c,'HEARTSTEEL')?c.stickers?.[id]:null;return `<div class="combo-aug" draggable="true" data-drag-combo="${escapeHtml(c.id)}" data-drag-aug="${escapeHtml(id)}" data-combo-target-aug="${escapeHtml(id)}" title="Drag to reorder or move to another combo"><span class="drag-grip" draggable="true" data-drag-combo="${escapeHtml(c.id)}" data-drag-aug="${escapeHtml(id)}" aria-label="Drag ${escapeHtml(a.name)}">⠿</span>${augVisual(a)}<div class="combo-aug-text"><strong title="${escapeHtml(a.name)}">${escapeHtml(a.name)}</strong>${rarityLabel(a)}${heartsteelSummary(sticker)}</div><button data-aug-info="${escapeHtml(id)}" title="Augment details">ⓘ</button><button data-remove-combo-aug="${escapeHtml(c.id)}|${escapeHtml(id)}" title="Remove from combo">×</button></div>`}).join('')||'<span class="drop-hint">Browse augments or drop them here</span>'}</div>${renderStickers(b,c)}${renderPentakill(b,c)}<details class="combo-core-details" data-core-details="${escapeHtml(c.id)}" ${comboCorePanelsOpen.has(c.id)?'open':''}><summary>Core item plan (${c.coreItems.length?c.coreItems.length+' items':'uses default'})</summary>${renderComboCoreEditor(b,c)}</details></div></section>`).join('')}</div>`;
+ return `<div class="combo-stack">${b.augmentCombos.map((c,i)=>`<section class="combo-row ${b.activeComboId===c.id?'active':''}" data-combo-drop="${escapeHtml(c.id)}"><div class="combo-titlebar"><span class="combo-number">${i+1}</span><input class="combo-name" data-combo-rename="${escapeHtml(c.id)}" aria-label="Combo name" value="${escapeHtml(c.name)}">${comboHeadlinerSelect(c)}<button class="btn smallbtn" data-combo-target="${escapeHtml(c.id)}">+ Augments</button>${b.augmentCombos.length>1?`<button class="btn smallbtn danger" data-remove-combo="${escapeHtml(c.id)}" title="Delete combo">×</button>`:''}</div><div class="combo-content ${comboHeadlinerNames(c).length?'has-addon':''}"><div class="combo-picks">${c.augments.map(id=>{const a=getAug(id),sticker=hasComboHeadliner(c,'HEARTSTEEL')?c.stickers?.[id]:null;return `<div class="combo-aug" draggable="true" data-drag-combo="${escapeHtml(c.id)}" data-drag-aug="${escapeHtml(id)}" data-combo-target-aug="${escapeHtml(id)}" title="Drag to reorder or move to another combo"><span class="drag-grip" draggable="true" data-drag-combo="${escapeHtml(c.id)}" data-drag-aug="${escapeHtml(id)}" aria-label="Drag ${escapeHtml(a.name)}">⠿</span>${augVisual(a)}<div class="combo-aug-text"><strong title="${escapeHtml(a.name)}">${escapeHtml(a.name)}</strong>${rarityLabel(a)}${heartsteelSummary(sticker)}</div><button data-aug-info="${escapeHtml(id)}" title="Augment details">ⓘ</button><button data-remove-combo-aug="${escapeHtml(c.id)}|${escapeHtml(id)}" title="Remove from combo">×</button></div>`}).join('')||'<span class="drop-hint">Click + Augments to add here</span>'}</div>${renderStickers(b,c)}${renderPentakill(b,c)}<details class="combo-core-details" data-core-details="${escapeHtml(c.id)}" ${comboCorePanelsOpen.has(c.id)?'open':''}><summary>Core item plan (${c.coreItems.length?c.coreItems.length+' items':'uses default'})</summary>${renderComboCoreEditor(b,c)}</details></div></section>`).join('')}</div>`;
 }
 const PENTAKILL_ABILITIES={Q:'HEAVY',W:'POWER',E:'THRASH',R:'DOOM'};
 function renderPentakill(b,c){
@@ -871,6 +871,7 @@ function render(){
   c.innerHTML=(siteSpacingEditing?siteSpacingToolbar(state.view):'')+`<div class="site-page-canvas" data-site-canvas style="--site-left:${x.left}%;--site-right:${x.right}%;--site-top:${x.top}px;--site-bottom:${x.bottom}px">${page}</div>`;
  }
  bindView();bindCards(c);bindSiteSpacing(c);
+ if(quickAugComboId){if(state.view==='builds'&&document.querySelector(`[data-combo-target="${CSS.escape(quickAugComboId)}"]`))requestAnimationFrame(positionQuickAugPicker);else closeQuickAugPicker();}
 }
 function detailOpenAug(id){
  const a=getAug(id),effect=augEffect(a),b=build()?ensureBuildV7(build()):null;
@@ -912,6 +913,70 @@ function renderStickers(b,c){
  if(!hasComboHeadliner(c,'HEARTSTEEL'))return '';
  return `<div class="combo-stickers"><div class="combo-addon-title">♥ HEARTSTEEL stickers</div>${c.augments.length?`<div class="combo-sticker-grid">${c.augments.map(id=>{const a=getAug(id),member=c.stickers[id]||'',m=stickerInfo(member);return `<label class="combo-sticker-item"><span>${escapeHtml(a.name)}</span><select data-sticker-for="${escapeHtml(c.id)}|${escapeHtml(id)}"><option value="">No sticker</option>${HEARTSTEEL_BONUSES.map(x=>`<option value="${escapeHtml(x.member)}" ${member===x.member?'selected':''}>${escapeHtml(x.member)} — ${escapeHtml(x.effect)}</option>`).join('')}</select>${m?`<small>${escapeHtml(m.effect)}</small>`:''}</label>`}).join('')}</div>`:'<span class="hint">Add augments to assign stickers.</span>'}</div>`;
 }
+// V31: one-click augment picker for one combo. Its state is transient; only adding
+// an augment changes the saved build. The full augment catalog remains available.
+let quickAugComboId=null,quickAugQuery='',quickAugRarity='all';
+function quickAugChoiceData(){
+ const b=build(),combo=b&&comboById(ensureBuildV7(b),quickAugComboId);
+ if(!combo)return null;
+ const q=keyName(quickAugQuery),all=allAugments().filter(a=>(quickAugRarity==='all'||a.rarity===quickAugRarity)&&(!q||keyName(a.name).includes(q)));
+ // Selected augments stay at the end; available choices appear first.
+ const sorted=[...all].sort((a,b)=>Number(combo.augments.includes(a.id))-Number(combo.augments.includes(b.id))||a.name.localeCompare(b.name));
+ return {combo,all,sorted};
+}
+function quickAugResults(){
+ const x=quickAugChoiceData();if(!x)return {html:'',count:0,available:0};
+ const shown=x.sorted.slice(0,90),available=x.all.filter(a=>!x.combo.augments.includes(a.id)).length;
+ return {count:x.all.length,available,html:shown.map(a=>{
+  const chosen=x.combo.augments.includes(a.id);
+  return `<button type="button" class="quick-aug-choice" data-quick-aug-add="${escapeHtml(a.id)}" ${chosen?'disabled aria-label="Already added"':''} title="${escapeHtml(a.name)}${chosen?' — already in this combo':' — add to this combo'}">${augVisual(a)}<span class="quick-aug-choice-info"><strong>${escapeHtml(a.name)}</strong>${rarityLabel(a)}</span><span class="quick-aug-add-icon">${chosen?'✓ Added':'+'}</span></button>`;
+ }).join('')||'<p class="quick-aug-empty">No augments match your search.</p>'};
+}
+function refreshQuickAugPickerResults(){
+ const host=document.getElementById('quickAugHost'),results=host?.querySelector('[data-quick-aug-results]');if(!results)return;
+ const r=quickAugResults();results.innerHTML=r.html;
+ host.querySelector('[data-quick-aug-count]').textContent=r.count?`${r.available} available · ${r.count} matching${r.count>90?' · showing first 90':''}`:'No matches';
+ host.querySelector('[data-quick-aug-added]').textContent=`${quickAugChoiceData()?.combo.augments.length||0} in combo`;
+ results.querySelectorAll('[data-quick-aug-add]').forEach(btn=>btn.onclick=()=>{
+  if(btn.disabled||!quickAugComboId)return;
+  // addToCombo persists, re-renders the build, and updates the selected combo.
+  addToCombo(btn.dataset.quickAugAdd,quickAugComboId);
+  refreshQuickAugPickerResults();
+  // Keep palette open and search ready for the next add.
+  document.getElementById('quickAugHost')?.querySelector('[data-quick-aug-search]')?.focus({preventScroll:true});
+ });
+}
+function positionQuickAugPicker(){
+ if(!quickAugComboId)return;
+ const pop=document.querySelector('#quickAugHost .quick-aug-picker'),button=[...document.querySelectorAll('[data-combo-target]')].find(x=>x.dataset.comboTarget===quickAugComboId);
+ if(!pop||!button)return;
+ const anchor=button.getBoundingClientRect(),gap=7,w=pop.offsetWidth||425,h=pop.offsetHeight||520;
+ let left=anchor.left,top=anchor.bottom+gap;
+ if(left+w>innerWidth-8)left=innerWidth-w-8;
+ if(left<8)left=8;
+ // If too close to the viewport bottom, open upward; otherwise keep it nearby.
+ if(top+h>innerHeight-8&&anchor.top-h-gap>=8)top=anchor.top-h-gap;
+ else top=Math.min(top,Math.max(8,innerHeight-h-8));
+ pop.style.left=Math.round(left)+'px';pop.style.top=Math.round(Math.max(8,top))+'px';
+}
+function closeQuickAugPicker(){quickAugComboId=null;const host=document.getElementById('quickAugHost');if(host)host.innerHTML='';}
+function openQuickAugPicker(comboId){
+ const b=build(),combo=b&&comboById(ensureBuildV7(b),comboId);if(!combo)return;
+ if(quickAugComboId===comboId&&document.querySelector('#quickAugHost .quick-aug-picker')){closeQuickAugPicker();return;}
+ quickAugComboId=comboId;quickAugQuery='';quickAugRarity='all';
+ const host=document.getElementById('quickAugHost');
+ host.innerHTML=`<section class="quick-aug-picker" role="dialog" aria-label="Quick add augments to ${escapeHtml(combo.name)}"><div class="quick-aug-header"><div class="quick-aug-heading"><strong>+ Add to ${escapeHtml(combo.name)}</strong><small>Select augments to add instantly</small></div><button class="quick-aug-close" type="button" data-quick-aug-close title="Close" aria-label="Close quick augment picker">×</button></div><div class="quick-aug-tools"><input type="search" data-quick-aug-search placeholder="Search augments…" aria-label="Search augments" autocomplete="off"><select data-quick-aug-rarity aria-label="Filter augment rarity"><option value="all">All rarities</option><option value="silver">Silver</option><option value="gold">Gold</option><option value="prismatic">Prismatic</option></select></div><div class="quick-aug-result-summary" data-quick-aug-count></div><div class="quick-aug-results" data-quick-aug-results></div><div class="quick-aug-footer"><span data-quick-aug-added></span><button type="button" class="btn smallbtn" data-quick-aug-done>Done</button></div></section>`;
+ host.querySelector('[data-quick-aug-close]').onclick=closeQuickAugPicker;
+ host.querySelector('[data-quick-aug-done]').onclick=closeQuickAugPicker;
+ const input=host.querySelector('[data-quick-aug-search]');input.oninput=()=>{quickAugQuery=input.value;refreshQuickAugPickerResults();host.querySelector('[data-quick-aug-results]').scrollTop=0};
+ input.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();const first=host.querySelector('[data-quick-aug-add]:not(:disabled)');if(first)first.click();}};
+ host.querySelector('[data-quick-aug-rarity]').onchange=e=>{quickAugRarity=e.target.value;refreshQuickAugPickerResults()};
+ refreshQuickAugPickerResults();positionQuickAugPicker();input.focus({preventScroll:true});
+}
+document.addEventListener('pointerdown',e=>{if(!quickAugComboId||e.target.closest('#quickAugHost')||e.target.closest('[data-combo-target]'))return;closeQuickAugPicker();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&quickAugComboId)closeQuickAugPicker();});
+window.addEventListener('resize',positionQuickAugPicker);
+window.addEventListener('scroll',positionQuickAugPicker,true);
 function bindAugLinks(root=document){root.querySelectorAll('[data-augpick],[data-aug-info],[data-edit-aug]').forEach(x=>x.onclick=()=>detailOpenAug(x.dataset.augpick||x.dataset.augInfo||x.dataset.editAug));root.querySelectorAll('[data-item-info]').forEach(x=>x.onclick=()=>detailOpenItem(x.dataset.itemInfo))}
 function renderBuildView(){
  const raw=build();if(!raw)return `<div class="section-head"><h1>My ARAM Mayhem Builds</h1><button class="btn primary" id="newMain">+ Create build</button></div><div class="panel"><div class="empty"><h2>No builds yet</h2><p>Create your first build and save your items, augment combos and Headliners.</p><button class="btn primary" id="newEmpty">Create build</button></div></div>`;
@@ -1073,7 +1138,7 @@ function bindView(){
  c.querySelector('#addCombo')?.addEventListener('click',()=>{const b=ensureBuildV7(build());const id='combo-'+newid();b.augmentCombos.push({id,name:'Combo '+(b.augmentCombos.length+1),augments:[],headliner:'',headliners:[],stickers:{},pentakill:{first:'',second:''}});b.activeComboId=id;touch();render()});
  c.querySelectorAll('[data-combo-rename]').forEach(x=>x.addEventListener('input',()=>{const combo=comboById(build(),x.dataset.comboRename);if(combo){combo.name=x.value;touch()}}));
  c.querySelectorAll('[data-remove-combo]').forEach(x=>x.onclick=()=>{const b=build();const combo=comboById(b,x.dataset.removeCombo);if(!combo||!confirm('Remove '+combo.name+' and its augment row?'))return;b.augmentCombos=b.augmentCombos.filter(c=>c!==combo);b.activeComboId=b.augmentCombos[0].id;for(const id of combo.augments)if(!chosenAugmentIds(b).includes(id))delete b.heartsteelStickers[id];touch();render()});
- c.querySelectorAll('[data-combo-target]').forEach(x=>x.onclick=()=>{const b=build();b.activeComboId=x.dataset.comboTarget;state.augPickerOpen=true;persist();render();c.querySelector('#augSearch')?.focus()});
+ c.querySelectorAll('[data-combo-target]').forEach(x=>x.onclick=()=>openQuickAugPicker(x.dataset.comboTarget));
  c.querySelectorAll('[data-remove-combo-aug]').forEach(x=>x.onclick=()=>{const [combo,id]=x.dataset.removeComboAug.split('|');removeFromCombo(combo,id)});
  c.querySelector('#toggleAugPicker')?.addEventListener('click',()=>{state.augPickerOpen=!state.augPickerOpen;render()});
  c.querySelector('#newOnly')?.addEventListener('change',e=>{state.newOnly=e.target.checked;render()});
@@ -1272,5 +1337,3 @@ document.addEventListener('error',e=>{if(e.target.matches?.('.aug-art-image,.ite
 window.addEventListener('hashchange',handleIncomingShare);
 document.getElementById('refreshBtn').onclick=()=>{loadRemote();loadRiot();loadMayhemItems();loadAugmentArtwork()};render();void handleIncomingShare();loadRemote();loadRiot();loadMayhemItems();loadAugmentArtwork();
 })();
-
-
