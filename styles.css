@@ -172,8 +172,8 @@ header{height:70px;background:rgba(7,22,33,.97);border-bottom:1px solid #244350;
 .editor-detail-panel .editor-intro{margin-top:9px;}
 .editor-intro summary{cursor:pointer;font-size:12px;font-weight:700;color:#9dcbd8;}
 .editor-intro textarea{margin-top:8px;min-height:60px;}
-.editor-mode .combo-stack{display:flex;flex-direction:column;}
-.editor-mode .combo-row{width:100%;min-width:0;}
+.editor-mode .combo-stack{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,420px),1fr));align-items:start;gap:10px;}
+.editor-mode .combo-row{width:100%;max-width:580px;min-width:0;align-self:start;}
 .editor-mode .combo-picks{grid-template-columns:repeat(auto-fill,minmax(190px,1fr));}
 .editor-mode .combo-aug{max-width:none;min-width:0;}
 .combo-titlebar{gap:8px;}
@@ -217,8 +217,8 @@ header{height:70px;background:rgba(7,22,33,.97);border-bottom:1px solid #244350;
 
 /* Selected augments form a vertical list; Headliner options share the next column. */
 .editor-mode .combo-content{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;align-items:start;}
-.editor-mode .combo-content.has-addon{grid-template-columns:minmax(0,.95fr) minmax(0,1fr);gap:12px;}
-.editor-mode .combo-picks{display:flex;flex-direction:column;gap:6px;min-width:0;}
+.editor-mode .combo-content.has-addon{grid-template-columns:minmax(0,1fr);gap:9px;}
+.editor-mode .combo-picks{display:flex;flex-direction:column;gap:6px;min-width:0;width:100%;}
 .editor-mode .combo-picks .combo-aug{width:100%;max-width:none;min-width:0;}
 .editor-mode .combo-content .combo-stickers,.editor-mode .combo-content .combo-pentakill{margin-top:0;}
 .editor-mode .combo-content .combo-sticker-grid{grid-template-columns:1fr;gap:8px;}
@@ -258,7 +258,7 @@ header{height:70px;background:rgba(7,22,33,.97);border-bottom:1px solid #244350;
 .editor-mode .section-head .hint{margin:3px 0 0;line-height:1.35;}
 .editor-mode .panel h2{margin-bottom:6px;}
 .editor-mode .combo-stack{gap:7px;}
-.editor-mode .combo-row{padding:8px;}
+.editor-mode .combo-row{padding:10px;}
 .editor-mode .combo-titlebar{margin-bottom:6px;}
 .editor-mode .combo-stickers,.editor-mode .combo-pentakill{padding:8px;margin-top:7px;}
 .editor-mode .item-bucket{padding:7px;}
@@ -533,3 +533,23 @@ body.library-page-mode.index-mode .main{padding:20px 18px 80px;}
 .editor-mode .item-bucket .item-add-to-slot{font-size:10px;padding:4px 8px}
 .editor-mode .item-bucket{min-width:0}
 @media(max-width:650px){.combo-headliner-picker{min-width:148px;max-width:100%}.headliner-picker-choices{min-width:190px}.focus-header-actions .focus-share-mini{min-width:50px;padding:0 5px}}
+
+/* V30 — compact build-editor groups; no change to saved item/augment data. */
+.editor-mode .items-selected{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;align-items:start;}
+.editor-mode .items-selected>.item-bucket{min-width:0;grid-column:auto;}
+.editor-mode .items-selected>.item-bucket.unsorted{grid-column:1/-1;min-height:83px;}
+.editor-mode .items-selected .chosen-item{min-width:0;}
+.editor-mode .items-selected .item-chip-info strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.editor-mode .combo-stack{min-width:0;}
+.editor-mode .combo-stack>.combo-row{box-sizing:border-box;overflow:visible;}
+.editor-mode .combo-row .combo-titlebar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+.editor-mode .combo-row .combo-name{max-width:none;min-width:115px;flex:1 1 155px;}
+.editor-mode .combo-row .combo-headliner-picker{flex:0 1 198px;min-width:155px;max-width:100%;}
+.editor-mode .combo-row .combo-content{min-width:0;}
+.editor-mode .combo-row .combo-content>*{grid-column:1;min-width:0;}
+.editor-mode .combo-row .combo-picks .combo-aug{min-width:0;max-width:100%;}
+.editor-mode .combo-row .combo-stickers,.editor-mode .combo-row .combo-pentakill{min-width:0;}
+.editor-mode .combo-row .combo-sticker-grid,.editor-mode .combo-row .combo-sticker-item{min-width:0;}
+.editor-mode .combo-row .combo-sticker-item select{max-width:100%;}
+@media(max-width:900px){.editor-mode .items-selected{grid-template-columns:repeat(2,minmax(0,1fr));}.editor-mode .items-selected>.item-bucket.unsorted{grid-column:1/-1;}}
+@media(max-width:560px){.editor-mode .items-selected{grid-template-columns:minmax(0,1fr);}.editor-mode .items-selected>.item-bucket.unsorted{grid-column:1;}.editor-mode .combo-stack{grid-template-columns:minmax(0,1fr);}.editor-mode .combo-row .combo-headliner-picker{flex:1 1 160px;}}
