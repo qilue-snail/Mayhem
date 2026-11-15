@@ -617,3 +617,18 @@ body.library-page-mode.index-mode .main{padding:20px 18px 80px;}
 .editor-mode .combo-aug.has-heartsteel{min-height:58px;}
 @media(max-width:620px){.inline-heartsteel{flex-basis:125px;min-width:98px;max-width:145px;margin:0 2px;}.sticker-picker-trigger{padding:4px 5px;min-height:41px;}.sticker-current-text strong{font-size:10px;}.sticker-current-text small{font-size:9px;}}
 @media(max-width:370px){.inline-heartsteel{flex-basis:98px;min-width:82px;max-width:106px;}.focus-aug-row .inline-heartsteel{min-width:84px;max-width:110px;}}
+
+/* V34 — Distinct but consistent purple Share controls. */
+.btn.share-build-btn,.focus-header-actions .focus-share-mini.share-build-btn{
+ background:#7755ad;border-color:#a888dd;color:#fff2ff;
+ box-shadow:inset 0 1px rgba(255,255,255,.12);font-weight:750;
+}
+.btn.share-build-btn:not(:disabled):hover,.focus-header-actions .focus-share-mini.share-build-btn:hover{
+ background:#946dc8;border-color:#d1b2f6;color:#fff;
+}
+.btn.share-build-btn:focus-visible,.focus-header-actions .focus-share-mini.share-build-btn:focus-visible{
+ outline:2px solid #d4afff;outline-offset:2px;
+}
+.btn.share-build-btn:disabled{opacity:.48;cursor:not-allowed;}
+/* Focused-card Share retains its deliberately smaller height than the gold Edit button. */
+.focus-header-actions .focus-share-mini.share-build-btn{height:28px;min-height:28px;}
