@@ -179,12 +179,7 @@ header{height:70px;background:rgba(7,22,33,.97);border-bottom:1px solid #244350;
 .combo-headliner-label{display:flex;align-items:center;gap:6px;color:#b6d2dc;font-size:11px;margin:0;}
 .combo-headliner-label select{width:170px;max-width:100%;padding:6px 8px;font-size:12px;}
 .combo-addon-title{display:block;color:#e8c47e;font-size:11px;font-weight:800;letter-spacing:.4px;margin-bottom:7px;}
-.combo-stickers,.combo-pentakill{margin-top:10px;padding:10px;background:#142b3b;border:1px solid #3b5c6c;border-radius:8px;}
-.combo-sticker-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:7px;}
-.combo-sticker-item{display:block;margin:0;font-weight:650;}
-.combo-sticker-item>span{font-size:11px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.combo-sticker-item select{margin-top:3px;padding:6px 8px;font-size:11px;}
-.combo-sticker-item small{display:block;margin-top:3px;color:#d7bdf6;font-size:10px;}
+.combo-pentakill{margin-top:10px;padding:10px;background:#142b3b;border:1px solid #3b5c6c;border-radius:8px;}
 .combo-pentakill .field{margin:0;}.combo-pentakill .pentakill-grid{gap:8px;}
 .combo-pentakill .hint{margin:7px 0 0;font-size:10px;}
 .combo-headliner-mini{margin-left:7px;display:inline-flex;border:1px solid #a2824c;background:#372c23;color:#f1cb80;border-radius:6px;padding:2px 6px;font:750 10px/1.2 system-ui,sans-serif;vertical-align:middle;}
@@ -218,8 +213,7 @@ header{height:70px;background:rgba(7,22,33,.97);border-bottom:1px solid #244350;
 .editor-mode .combo-content.has-addon{grid-template-columns:minmax(0,1fr);gap:9px;}
 .editor-mode .combo-picks{display:flex;flex-direction:column;gap:6px;min-width:0;width:100%;}
 .editor-mode .combo-picks .combo-aug{width:100%;max-width:none;min-width:0;}
-.editor-mode .combo-content .combo-stickers,.editor-mode .combo-content .combo-pentakill{margin-top:0;}
-.editor-mode .combo-content .combo-sticker-grid{grid-template-columns:1fr;gap:8px;}
+.editor-mode .combo-content .combo-pentakill{margin-top:0;}
 @media(max-width:1200px){.editor-mode .combo-content.has-addon{grid-template-columns:1fr;}}
 
 /* V13: compact build directory, with a deliberately read-only focused view by default. */
@@ -258,7 +252,7 @@ header{height:70px;background:rgba(7,22,33,.97);border-bottom:1px solid #244350;
 .editor-mode .combo-stack{gap:7px;}
 .editor-mode .combo-row{padding:10px;}
 .editor-mode .combo-titlebar{margin-bottom:6px;}
-.editor-mode .combo-stickers,.editor-mode .combo-pentakill{padding:8px;margin-top:7px;}
+.editor-mode .combo-pentakill{padding:8px;margin-top:7px;}
 .editor-mode .item-bucket{padding:7px;}
 .editor-mode .items-selected{gap:7px;}
 @media(max-width:710px){.library-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr));}.library-summary-card{padding:8px;min-height:80px;}.library-summary-portrait{width:46px;height:46px;}.library-summary-name{font-size:15px;}.library-summary-arrow{font-size:12px;}}
@@ -546,9 +540,7 @@ body.library-page-mode.index-mode .main{padding:20px 18px 80px;}
 .editor-mode .combo-row .combo-content{min-width:0;}
 .editor-mode .combo-row .combo-content>*{grid-column:1;min-width:0;}
 .editor-mode .combo-row .combo-picks .combo-aug{min-width:0;max-width:100%;}
-.editor-mode .combo-row .combo-stickers,.editor-mode .combo-row .combo-pentakill{min-width:0;}
-.editor-mode .combo-row .combo-sticker-grid,.editor-mode .combo-row .combo-sticker-item{min-width:0;}
-.editor-mode .combo-row .combo-sticker-item select{max-width:100%;}
+.editor-mode .combo-row .combo-pentakill{min-width:0;}
 @media(max-width:900px){.editor-mode .items-selected{grid-template-columns:repeat(2,minmax(0,1fr));}.editor-mode .items-selected>.item-bucket.unsorted{grid-column:1/-1;}}
 @media(max-width:560px){.editor-mode .items-selected{grid-template-columns:minmax(0,1fr);}.editor-mode .items-selected>.item-bucket.unsorted{grid-column:1;}.editor-mode .combo-stack{grid-template-columns:minmax(0,1fr);}.editor-mode .combo-row .combo-headliner-picker{flex:1 1 160px;}}
 /* V31: compact add-augment palette opens next to each combo, not below long combos. */
@@ -579,3 +571,28 @@ body.library-page-mode.index-mode .main{padding:20px 18px 80px;}
 .editor-mode .combo-row [data-combo-target]{border-color:#b99a60;background:#264d60;color:#f3d79c}
 .editor-mode .combo-row [data-combo-target]:hover{background:#31657b}
 @media(max-width:540px){.quick-aug-picker{width:calc(100vw - 16px);max-height:min(550px,calc(100dvh - 20px));}.quick-aug-tools select{width:105px;}}
+
+/* V32 — All combo controls stay on one row. Delete stays at the far right. */
+.editor-mode .combo-row .combo-titlebar{display:grid;grid-template-columns:24px minmax(0,1fr) minmax(0,132px) max-content;gap:6px;align-items:center;flex-wrap:nowrap;margin-bottom:8px;min-width:0;}
+.editor-mode .combo-row .combo-titlebar.has-delete{grid-template-columns:24px minmax(0,1fr) minmax(0,132px) max-content 27px;}
+.editor-mode .combo-row .combo-titlebar .combo-number{width:24px;min-width:24px;}
+.editor-mode .combo-row .combo-titlebar .combo-name{width:100%;min-width:0;max-width:none;flex:none;height:34px;padding:5px 7px;}
+.editor-mode .combo-row .combo-titlebar .combo-headliner-picker{width:100%;min-width:0;max-width:none;flex:none;}
+.editor-mode .combo-row .combo-titlebar .combo-headliner-picker>summary{width:100%;min-width:0;max-width:none;padding:6px 7px;gap:3px;font-size:10px;}
+.editor-mode .combo-row .combo-titlebar [data-combo-target]{height:34px;min-height:34px;padding:4px 8px;font-size:11px;}
+.editor-mode .combo-row .combo-titlebar [data-remove-combo]{width:27px;height:30px;min-width:27px;min-height:30px;display:grid;place-items:center;padding:0;font-size:16px;line-height:1;}
+/* Show sticker choice and a single copy of its effect, both on the right. */
+.editor-mode .combo-aug,.focus-aug-row{align-items:center;min-width:0;}
+.editor-mode .combo-aug-text,.focus-aug-row .focus-aug-text{flex:1 1 auto;min-width:0;}
+.inline-heartsteel{display:flex;flex-direction:column;justify-content:center;gap:2px;flex:0 1 144px;width:144px;min-width:98px;max-width:150px;align-self:stretch;margin:0 5px 0 3px;cursor:default;}
+.inline-heartsteel select{display:block;width:100%;min-width:0;max-width:100%;height:26px;padding:3px 19px 3px 6px;margin:0;border-radius:5px;border:1px solid #6b6376;background:#172d3c;color:#f0d19a;font-size:10px;font-weight:750;line-height:1;cursor:pointer;}
+.inline-heartsteel select:focus-visible{outline:2px solid #edd091;outline-offset:1px;}
+.inline-heartsteel-effect,.inline-heartsteel.is-readonly small{display:block;min-width:0;white-space:normal;overflow-wrap:anywhere;font-size:10px;line-height:1.2;color:#c6dbe6;font-weight:600;}
+.inline-heartsteel.is-readonly{gap:2px;justify-content:center;}
+.inline-heartsteel.is-readonly strong{display:block;color:#efc5f2;font-size:10px;line-height:1.2;overflow-wrap:anywhere;}
+.editor-mode .combo-aug.has-heartsteel{min-height:58px;}
+.focus-aug-row .inline-heartsteel{flex-basis:122px;max-width:132px;min-width:86px;margin:0 2px;}
+.focus-aug-row .inline-heartsteel select{height:24px;}
+/* At very narrow sizes, prioritize actions and sticker usability without horizontal scroll. */
+@media(max-width:620px){.editor-mode .combo-row .combo-titlebar,.editor-mode .combo-row .combo-titlebar.has-delete{gap:4px;grid-template-columns:21px minmax(0,1fr) minmax(0,98px) max-content 24px;}.editor-mode .combo-row .combo-titlebar:not(.has-delete){grid-template-columns:21px minmax(0,1fr) minmax(0,98px) max-content;}.editor-mode .combo-row .combo-titlebar [data-combo-target]{padding:4px 5px;font-size:10px;}.editor-mode .combo-row .combo-titlebar [data-remove-combo]{width:24px;min-width:24px;}.editor-mode .combo-row .combo-titlebar .combo-headliner-picker>summary{font-size:9px;}.inline-heartsteel{flex-basis:116px;min-width:90px;max-width:119px;margin:0 2px;}.combo-aug .augsymbol{width:34px;min-width:34px;height:34px;}}
+@media(max-width:370px){.editor-mode .combo-row .combo-titlebar,.editor-mode .combo-row .combo-titlebar.has-delete{grid-template-columns:20px minmax(0,1fr) minmax(0,90px) max-content 22px;gap:3px;}.editor-mode .combo-row .combo-titlebar:not(.has-delete){grid-template-columns:20px minmax(0,1fr) minmax(0,90px) max-content;}.editor-mode .combo-row .combo-titlebar [data-combo-target]{font-size:9px;padding:3px;}.inline-heartsteel{flex-basis:92px;min-width:79px;max-width:96px;}.editor-mode .combo-aug{gap:4px;}.editor-mode .combo-aug .drag-grip{flex-basis:12px;}.editor-mode .combo-aug>button{padding:1px;}}

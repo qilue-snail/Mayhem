@@ -315,8 +315,54 @@ function bindHeadlinerPickers(root, selector, commit, sourceBuild=null){
   commit();
  }));
 }
+// One sticker control per HEARTSTEEL augment; the existing combo.stickers map stays unchanged.
+function inlineHeartsteelSticker(combo,augId,member,{editable=true,focused=false}={}){
+ const bonus=stickerInfo(member),name=escapeHtml(member||''),effect=bonus?escapeHtml(bonus.effect):'';
+ if(!editable){
+  return member?`<div class="inline-heartsteel is-readonly" title="${name}: ${effect}"><strong>♥ ${name}</strong><small>${effect}</small></div>`:'';
+ }
+ const attribute=focused?'data-focus-sticker':'data-sticker-for';
+ return `<div class="inline-heartsteel" draggable="false">
+  <select ${attribute}="${escapeHtml(combo.id)}|${escapeHtml(augId)}" draggable="false" aria-label="HEARTSTEEL sticker for ${escapeHtml(getAug(augId).name)}" title="Choose a HEARTSTEEL member">
+   <option value="">♥ No sticker</option>
+   ${HEARTSTEEL_BONUSES.map(b=>`<option value="${escapeHtml(b.member)}" ${member===b.member?'selected':''}>${escapeHtml(b.member)}</option>`).join('')}
+  </select>
+  <small class="inline-heartsteel-effect" ${effect?'':'aria-hidden="true"'}>${effect||'&nbsp;'}</small>
+ </div>`;
+}
 function renderComboRows(b){
- return `<div class="combo-stack">${b.augmentCombos.map((c,i)=>`<section class="combo-row ${b.activeComboId===c.id?'active':''}" data-combo-drop="${escapeHtml(c.id)}"><div class="combo-titlebar"><span class="combo-number">${i+1}</span><input class="combo-name" data-combo-rename="${escapeHtml(c.id)}" aria-label="Combo name" value="${escapeHtml(c.name)}">${comboHeadlinerSelect(c)}<button class="btn smallbtn" data-combo-target="${escapeHtml(c.id)}">+ Augments</button>${b.augmentCombos.length>1?`<button class="btn smallbtn danger" data-remove-combo="${escapeHtml(c.id)}" title="Delete combo">×</button>`:''}</div><div class="combo-content ${comboHeadlinerNames(c).length?'has-addon':''}"><div class="combo-picks">${c.augments.map(id=>{const a=getAug(id),sticker=hasComboHeadliner(c,'HEARTSTEEL')?c.stickers?.[id]:null;return `<div class="combo-aug" draggable="true" data-drag-combo="${escapeHtml(c.id)}" data-drag-aug="${escapeHtml(id)}" data-combo-target-aug="${escapeHtml(id)}" title="Drag to reorder or move to another combo"><span class="drag-grip" draggable="true" data-drag-combo="${escapeHtml(c.id)}" data-drag-aug="${escapeHtml(id)}" aria-label="Drag ${escapeHtml(a.name)}">⠿</span>${augVisual(a)}<div class="combo-aug-text"><strong title="${escapeHtml(a.name)}">${escapeHtml(a.name)}</strong>${rarityLabel(a)}${heartsteelSummary(sticker)}</div><button data-aug-info="${escapeHtml(id)}" title="Augment details">ⓘ</button><button data-remove-combo-aug="${escapeHtml(c.id)}|${escapeHtml(id)}" title="Remove from combo">×</button></div>`}).join('')||'<span class="drop-hint">Click + Augments to add here</span>'}</div>${renderStickers(b,c)}${renderPentakill(b,c)}<details class="combo-core-details" data-core-details="${escapeHtml(c.id)}" ${comboCorePanelsOpen.has(c.id)?'open':''}><summary>Core item plan (${c.coreItems.length?c.coreItems.length+' items':'uses default'})</summary>${renderComboCoreEditor(b,c)}</details></div></section>`).join('')}</div>`;
+ return `<div class="combo-stack">${b.augmentCombos.map((c,i)=>{
+  const hasHeartsteel=hasComboHeadliner(c,'HEARTSTEEL');
+  const removable=b.augmentCombos.length>1;
+  const header=`<div class="combo-titlebar ${removable?'has-delete':''}">
+   <span class="combo-number">${i+1}</span>
+   <input class="combo-name" data-combo-rename="${escapeHtml(c.id)}" aria-label="Combo name" value="${escapeHtml(c.name)}">
+   ${comboHeadlinerSelect(c)}
+   <button class="btn smallbtn" data-combo-target="${escapeHtml(c.id)}">+ Augments</button>
+   ${removable?`<button class="btn smallbtn danger" data-remove-combo="${escapeHtml(c.id)}" title="Delete combo" aria-label="Delete ${escapeHtml(c.name)}">×</button>`:''}
+  </div>`;
+  const augments=c.augments.map(id=>{
+   const a=getAug(id),sticker=hasHeartsteel?c.stickers?.[id]:null;
+   return `<div class="combo-aug ${hasHeartsteel?'has-heartsteel':''}" draggable="true" data-drag-combo="${escapeHtml(c.id)}" data-drag-aug="${escapeHtml(id)}" data-combo-target-aug="${escapeHtml(id)}" title="Drag to reorder or move to another combo">
+    <span class="drag-grip" draggable="true" data-drag-combo="${escapeHtml(c.id)}" data-drag-aug="${escapeHtml(id)}" aria-label="Drag ${escapeHtml(a.name)}">⠿</span>
+    ${augVisual(a)}
+    <div class="combo-aug-text"><strong title="${escapeHtml(a.name)}">${escapeHtml(a.name)}</strong>${rarityLabel(a)}</div>
+    ${hasHeartsteel?inlineHeartsteelSticker(c,id,sticker):''}
+    <button data-aug-info="${escapeHtml(id)}" title="Augment details">ⓘ</button>
+    <button data-remove-combo-aug="${escapeHtml(c.id)}|${escapeHtml(id)}" title="Remove from combo">×</button>
+   </div>`;
+  }).join('')||'<span class="drop-hint">Click + Augments to add here</span>';
+  return `<section class="combo-row ${b.activeComboId===c.id?'active':''}" data-combo-drop="${escapeHtml(c.id)}">
+   ${header}
+   <div class="combo-content ${comboHeadlinerNames(c).length?'has-addon':''}">
+    <div class="combo-picks">${augments}</div>
+    ${renderPentakill(b,c)}
+    <details class="combo-core-details" data-core-details="${escapeHtml(c.id)}" ${comboCorePanelsOpen.has(c.id)?'open':''}>
+     <summary>Core item plan (${c.coreItems.length?c.coreItems.length+' items':'uses default'})</summary>${renderComboCoreEditor(b,c)}
+    </details>
+   </div>
+  </section>`;
+ }).join('')}</div>`;
 }
 const PENTAKILL_ABILITIES={Q:'HEAVY',W:'POWER',E:'THRASH',R:'DOOM'};
 function renderPentakill(b,c){
@@ -451,7 +497,7 @@ function focusComboCard(b,combo,index,editable,activeCombo){
  const layoutMode=focusLayoutEditing;
  const selected=activeCombo?.id===combo.id;
  const cols=comboColumnWidth(index,b.augmentCombos.length);
- return `<section class="focus-combo-col ${selected?'is-active-combo':''} ${layoutMode?'layout-configurable':''}" style="--focus-span:${cols};--custom-min-height:${focusLayout.comboHeights[index]||0}px" data-layout-combo-index="${index}" data-focus-combo-drop="${escapeHtml(combo.id)}" data-activate-combo="${escapeHtml(combo.id)}" aria-label="${escapeHtml(combo.name)}">${layoutMode?`<div class="focus-combo-layout-controls" data-layout-ui><span class="focus-layout-grip" draggable="true" data-layout-drag-combo="${index}" title="Drag to reposition combo" aria-label="Drag combo">⠿</span><label>Width <select data-layout-combo-width="${index}" aria-label="Width of combo position ${index+1}">${focusLayout.comboPercents[index]?`<option value="custom" selected>${focusLayout.comboPercents[index]}% (dragged)</option>`:''}${[['auto','Auto'],['third','⅓'],['half','½'],['wide','⅔'],['full','Full']].map(([w,title])=>`<option value="${w}" ${!focusLayout.comboPercents[index]&&(focusLayout.comboWidths[index]===w||!focusLayout.comboWidths[index]&&w==='auto')?'selected':''}>${title}</option>`).join('')}</select></label></div><span class="focus-free-resizer" data-resize-combo="${index}" role="separator" aria-label="Drag to resize combo ${index+1} width"></span><span class="focus-bottom-resizer" data-resize-combo-y="${index}" role="separator" aria-label="Drag bottom edge to resize combo ${index+1} height" title="Drag to resize height; double-click for automatic height"></span>`:''}<div class="focus-combo-header"><h3>${comboHeading(combo,index)}</h3>${editable?comboHeadlinerSelect(combo,'data-focus-headliner-choice'):''}</div><button type="button" class="focus-combo-activate" data-select-combo="${escapeHtml(combo.id)}" aria-pressed="${selected}">${selected?'✓ Active · showing its items':'Select · show items'}</button><div class="focus-aug-list">${combo.augments.map(id=>{const a=getAug(id),sticker=hasComboHeadliner(combo,'HEARTSTEEL')?combo.stickers?.[id]:null;return `<div class="focus-aug-row" ${editable?`draggable="true" data-focus-drag-combo="${escapeHtml(combo.id)}" data-focus-drag-aug="${escapeHtml(id)}"`:''} data-focus-target-aug="${escapeHtml(id)}">${editable?`<span class="drag-grip" draggable="true" data-focus-drag-combo="${escapeHtml(combo.id)}" data-focus-drag-aug="${escapeHtml(id)}" title="Drag to reorder or move augment">⠿</span>`:''}${augVisual(a)}<div class="focus-aug-text"><strong>${escapeHtml(a.name)}</strong><span class="rarity ${escapeHtml(a.rarity||'silver')}">${escapeHtml(a.rarity||'silver')}</span>${editable&&hasComboHeadliner(combo,'HEARTSTEEL')?`<select class="focus-sticker-select" data-focus-sticker="${escapeHtml(combo.id)}|${escapeHtml(id)}" aria-label="HEARTSTEEL member for ${escapeHtml(a.name)}"><option value="">No sticker</option>${HEARTSTEEL_BONUSES.map(x=>`<option value="${escapeHtml(x.member)}" ${sticker===x.member?'selected':''}>${escapeHtml(x.member)}</option>`).join('')}</select>`:''}${heartsteelSummary(sticker)}</div></div>`}).join('')||`<span class="small">${editable?'Drop augments here':'No augments selected'}</span>`}</div>${pentakillSummary(combo,editable)}</section>`;
+ return `<section class="focus-combo-col ${selected?'is-active-combo':''} ${layoutMode?'layout-configurable':''}" style="--focus-span:${cols};--custom-min-height:${focusLayout.comboHeights[index]||0}px" data-layout-combo-index="${index}" data-focus-combo-drop="${escapeHtml(combo.id)}" data-activate-combo="${escapeHtml(combo.id)}" aria-label="${escapeHtml(combo.name)}">${layoutMode?`<div class="focus-combo-layout-controls" data-layout-ui><span class="focus-layout-grip" draggable="true" data-layout-drag-combo="${index}" title="Drag to reposition combo" aria-label="Drag combo">⠿</span><label>Width <select data-layout-combo-width="${index}" aria-label="Width of combo position ${index+1}">${focusLayout.comboPercents[index]?`<option value="custom" selected>${focusLayout.comboPercents[index]}% (dragged)</option>`:''}${[['auto','Auto'],['third','⅓'],['half','½'],['wide','⅔'],['full','Full']].map(([w,title])=>`<option value="${w}" ${!focusLayout.comboPercents[index]&&(focusLayout.comboWidths[index]===w||!focusLayout.comboWidths[index]&&w==='auto')?'selected':''}>${title}</option>`).join('')}</select></label></div><span class="focus-free-resizer" data-resize-combo="${index}" role="separator" aria-label="Drag to resize combo ${index+1} width"></span><span class="focus-bottom-resizer" data-resize-combo-y="${index}" role="separator" aria-label="Drag bottom edge to resize combo ${index+1} height" title="Drag to resize height; double-click for automatic height"></span>`:''}<div class="focus-combo-header"><h3>${comboHeading(combo,index)}</h3>${editable?comboHeadlinerSelect(combo,'data-focus-headliner-choice'):''}</div><button type="button" class="focus-combo-activate" data-select-combo="${escapeHtml(combo.id)}" aria-pressed="${selected}">${selected?'✓ Active · showing its items':'Select · show items'}</button><div class="focus-aug-list">${combo.augments.map(id=>{const a=getAug(id),sticker=hasComboHeadliner(combo,'HEARTSTEEL')?combo.stickers?.[id]:null;return `<div class="focus-aug-row" ${editable?`draggable="true" data-focus-drag-combo="${escapeHtml(combo.id)}" data-focus-drag-aug="${escapeHtml(id)}"`:''} data-focus-target-aug="${escapeHtml(id)}">${editable?`<span class="drag-grip" draggable="true" data-focus-drag-combo="${escapeHtml(combo.id)}" data-focus-drag-aug="${escapeHtml(id)}" title="Drag to reorder or move augment">⠿</span>`:''}${augVisual(a)}<div class="focus-aug-text"><strong>${escapeHtml(a.name)}</strong><span class="rarity ${escapeHtml(a.rarity||'silver')}">${escapeHtml(a.rarity||'silver')}</span></div>${hasComboHeadliner(combo,'HEARTSTEEL')?inlineHeartsteelSticker(combo,id,sticker,{editable,focused:true}):''}</div>`}).join('')||`<span class="small">${editable?'Drop augments here':'No augments selected'}</span>`}</div>${pentakillSummary(combo,editable)}</section>`;
 }
 function focusLayoutSection(key,content,comboCount){
  const setting=focusLayout.sections[key],mode=focusLayoutEditing;
@@ -896,11 +942,6 @@ function detailOpenItem(id){
 }
 function closeDetail(){document.getElementById('detailHost').innerHTML=''}
 function stickerInfo(member){return HEARTSTEEL_BONUSES.find(x=>x.member===member)}
-function heartsteelSummary(member){
- if(!member)return '';
- const bonus=stickerInfo(member);
- return `<small class="heartsteel-member">♥ ${escapeHtml(member)}</small>${bonus?`<small class="heartsteel-effect">${escapeHtml(bonus.effect)}</small>`:''}`;
-}
 function setSticker(id,member,comboId){
  const b=build();if(!b)return;
  const chosen=comboById(b,comboId);const c=(hasComboHeadliner(chosen,'HEARTSTEEL')&&chosen.augments.includes(id)?chosen:null)||b.augmentCombos.find(x=>hasComboHeadliner(x,'HEARTSTEEL')&&x.augments.includes(id));
@@ -908,10 +949,6 @@ function setSticker(id,member,comboId){
  if(member&&!stickerInfo(member))return toast('Unknown HEARTSTEEL member');
  if(member)c.stickers[id]=member;else delete c.stickers[id];
  touch();render();toast(member?'Sticker saved for '+getAug(id).name:'Sticker removed');
-}
-function renderStickers(b,c){
- if(!hasComboHeadliner(c,'HEARTSTEEL'))return '';
- return `<div class="combo-stickers"><div class="combo-addon-title">♥ HEARTSTEEL stickers</div>${c.augments.length?`<div class="combo-sticker-grid">${c.augments.map(id=>{const a=getAug(id),member=c.stickers[id]||'',m=stickerInfo(member);return `<label class="combo-sticker-item"><span>${escapeHtml(a.name)}</span><select data-sticker-for="${escapeHtml(c.id)}|${escapeHtml(id)}"><option value="">No sticker</option>${HEARTSTEEL_BONUSES.map(x=>`<option value="${escapeHtml(x.member)}" ${member===x.member?'selected':''}>${escapeHtml(x.member)} — ${escapeHtml(x.effect)}</option>`).join('')}</select>${m?`<small>${escapeHtml(m.effect)}</small>`:''}</label>`}).join('')}</div>`:'<span class="hint">Add augments to assign stickers.</span>'}</div>`;
 }
 // V31: one-click augment picker for one combo. Its state is transient; only adding
 // an augment changes the saved build. The full augment catalog remains available.
