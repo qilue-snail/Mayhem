@@ -568,8 +568,18 @@ body.library-page-mode.index-mode .main{padding:20px 18px 80px;}
 .quick-aug-choice:disabled .quick-aug-add-icon{color:#9dcaad;font-size:11px}
 .quick-aug-empty{font-size:12px;color:#c1d6df;padding:14px 8px}
 .quick-aug-footer{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 12px;border-top:1px solid #35576a;font-size:11px;color:#bed4da}
-.editor-mode .combo-row [data-combo-target]{border-color:#b99a60;background:#264d60;color:#f3d79c}
-.editor-mode .combo-row [data-combo-target]:hover{background:#31657b}
+.editor-mode .combo-row [data-combo-target] {
+    border-color: #e2b965;
+    color: #f5d78e;
+    background: #35412c;
+    font-weight: 800;
+    box-shadow: inset 0 0 0 1px #e1b96722;
+}
+.editor-mode .combo-row [data-combo-target]:hover {
+    background: #4b512b;
+    border-color: #f2d795;
+    color: #fff1ca;
+}
 @media(max-width:540px){.quick-aug-picker{width:calc(100vw - 16px);max-height:min(550px,calc(100dvh - 20px));}.quick-aug-tools select{width:105px;}}
 
 /* V32 — All combo controls stay on one row. Delete stays at the far right. */
