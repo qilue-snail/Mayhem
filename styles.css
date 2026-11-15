@@ -584,15 +584,36 @@ body.library-page-mode.index-mode .main{padding:20px 18px 80px;}
 /* Show sticker choice and a single copy of its effect, both on the right. */
 .editor-mode .combo-aug,.focus-aug-row{align-items:center;min-width:0;}
 .editor-mode .combo-aug-text,.focus-aug-row .focus-aug-text{flex:1 1 auto;min-width:0;}
-.inline-heartsteel{display:flex;flex-direction:column;justify-content:center;gap:2px;flex:0 1 144px;width:144px;min-width:98px;max-width:150px;align-self:stretch;margin:0 5px 0 3px;cursor:default;}
-.inline-heartsteel select{display:block;width:100%;min-width:0;max-width:100%;height:26px;padding:3px 19px 3px 6px;margin:0;border-radius:5px;border:1px solid #6b6376;background:#172d3c;color:#f0d19a;font-size:10px;font-weight:750;line-height:1;cursor:pointer;}
-.inline-heartsteel select:focus-visible{outline:2px solid #edd091;outline-offset:1px;}
-.inline-heartsteel-effect,.inline-heartsteel.is-readonly small{display:block;min-width:0;white-space:normal;overflow-wrap:anywhere;font-size:10px;line-height:1.2;color:#c6dbe6;font-weight:600;}
+.inline-heartsteel{display:flex;flex-direction:column;justify-content:center;flex:0 1 176px;width:176px;min-width:115px;max-width:190px;align-self:stretch;margin:0 5px 0 3px;cursor:default;}
+
+
+.inline-heartsteel.is-readonly small{display:block;min-width:0;white-space:normal;overflow-wrap:anywhere;font-size:10px;line-height:1.2;color:#c6dbe6;font-weight:600;}
 .inline-heartsteel.is-readonly{gap:2px;justify-content:center;}
 .inline-heartsteel.is-readonly strong{display:block;color:#efc5f2;font-size:10px;line-height:1.2;overflow-wrap:anywhere;}
 .editor-mode .combo-aug.has-heartsteel{min-height:58px;}
 .focus-aug-row .inline-heartsteel{flex-basis:122px;max-width:132px;min-width:86px;margin:0 2px;}
-.focus-aug-row .inline-heartsteel select{height:24px;}
+.focus-aug-row 
 /* At very narrow sizes, prioritize actions and sticker usability without horizontal scroll. */
 @media(max-width:620px){.editor-mode .combo-row .combo-titlebar,.editor-mode .combo-row .combo-titlebar.has-delete{gap:4px;grid-template-columns:21px minmax(0,1fr) minmax(0,98px) max-content 24px;}.editor-mode .combo-row .combo-titlebar:not(.has-delete){grid-template-columns:21px minmax(0,1fr) minmax(0,98px) max-content;}.editor-mode .combo-row .combo-titlebar [data-combo-target]{padding:4px 5px;font-size:10px;}.editor-mode .combo-row .combo-titlebar [data-remove-combo]{width:24px;min-width:24px;}.editor-mode .combo-row .combo-titlebar .combo-headliner-picker>summary{font-size:9px;}.inline-heartsteel{flex-basis:116px;min-width:90px;max-width:119px;margin:0 2px;}.combo-aug .augsymbol{width:34px;min-width:34px;height:34px;}}
 @media(max-width:370px){.editor-mode .combo-row .combo-titlebar,.editor-mode .combo-row .combo-titlebar.has-delete{grid-template-columns:20px minmax(0,1fr) minmax(0,90px) max-content 22px;gap:3px;}.editor-mode .combo-row .combo-titlebar:not(.has-delete){grid-template-columns:20px minmax(0,1fr) minmax(0,90px) max-content;}.editor-mode .combo-row .combo-titlebar [data-combo-target]{font-size:9px;padding:3px;}.inline-heartsteel{flex-basis:92px;min-width:79px;max-width:96px;}.editor-mode .combo-aug{gap:4px;}.editor-mode .combo-aug .drag-grip{flex-basis:12px;}.editor-mode .combo-aug>button{padding:1px;}}
+
+/* V33 — Readable floating HEARTSTEEL menu; no native select, no redundant effect line. */
+.sticker-picker-trigger{appearance:none;-webkit-appearance:none;display:flex;align-items:center;justify-content:space-between;gap:5px;width:100%;min-height:44px;padding:5px 7px;border:1px solid #6c7889;border-radius:6px;background:#102a39;color:#f4d59d;text-align:left;cursor:pointer;font-size:11px;font-weight:700;}
+.sticker-picker-trigger:hover,.sticker-picker-trigger[aria-expanded="true"]{border-color:#efc778;background:#173b4d;}
+.sticker-picker-trigger:focus-visible{outline:2px solid #f4d59d;outline-offset:1px;}
+.sticker-current-text{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1;}
+.sticker-current-text strong{display:block;font-size:11px;line-height:1.15;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+.sticker-current-text small{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden;font-size:10px;line-height:1.18;color:#cce4eb;font-weight:600;overflow-wrap:anywhere;}
+.sticker-chevron{flex:none;color:#edc982;font-size:14px;}
+.sticker-picker-popup{position:fixed;z-index:9999;box-sizing:border-box;padding:5px;overflow-y:auto;overscroll-behavior:contain;background:#102331;border:1px solid #668295;border-radius:9px;box-shadow:0 15px 40px #000c;scrollbar-width:thin;}
+.sticker-picker-option{display:flex;align-items:center;justify-content:space-between;gap:9px;width:100%;padding:9px 10px;border:1px solid transparent;background:transparent;border-radius:6px;color:#e8f6f9;text-align:left;cursor:pointer;min-height:43px;}
+.sticker-picker-option:hover,.sticker-picker-option:focus-visible{outline:0;border-color:#4b7c91;background:#1b4256;}
+.sticker-picker-option.is-selected{background:#204353;border-color:#ab8a54;}
+.sticker-option-lines{display:flex;flex:1;flex-direction:column;gap:2px;min-width:0;}
+.sticker-option-lines strong{font-size:12px;line-height:1.3;color:#f7d78c;}
+.sticker-option-lines small{font-size:11px;line-height:1.35;color:#bfd8e2;}
+.sticker-option-check{color:#a5e6c1;font-size:15px;}
+.focus-aug-row .inline-heartsteel{flex-basis:160px;max-width:178px;min-width:100px;}
+.editor-mode .combo-aug.has-heartsteel{min-height:58px;}
+@media(max-width:620px){.inline-heartsteel{flex-basis:125px;min-width:98px;max-width:145px;margin:0 2px;}.sticker-picker-trigger{padding:4px 5px;min-height:41px;}.sticker-current-text strong{font-size:10px;}.sticker-current-text small{font-size:9px;}}
+@media(max-width:370px){.inline-heartsteel{flex-basis:98px;min-width:82px;max-width:106px;}.focus-aug-row .inline-heartsteel{min-width:84px;max-width:110px;}}

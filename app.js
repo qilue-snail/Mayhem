@@ -315,21 +315,89 @@ function bindHeadlinerPickers(root, selector, commit, sourceBuild=null){
   commit();
  }));
 }
-// One sticker control per HEARTSTEEL augment; the existing combo.stickers map stays unchanged.
+// Inline HEARTSTEEL assignment; keep combo.stickers unchanged for old builds and shared links.
+// A custom floating picker shows EVERY effect and can close on outside click or Escape.
 function inlineHeartsteelSticker(combo,augId,member,{editable=true,focused=false}={}){
  const bonus=stickerInfo(member),name=escapeHtml(member||''),effect=bonus?escapeHtml(bonus.effect):'';
  if(!editable){
   return member?`<div class="inline-heartsteel is-readonly" title="${name}: ${effect}"><strong>♥ ${name}</strong><small>${effect}</small></div>`:'';
  }
- const attribute=focused?'data-focus-sticker':'data-sticker-for';
+ const key=escapeHtml(combo.id)+'|'+escapeHtml(augId);
  return `<div class="inline-heartsteel" draggable="false">
-  <select ${attribute}="${escapeHtml(combo.id)}|${escapeHtml(augId)}" draggable="false" aria-label="HEARTSTEEL sticker for ${escapeHtml(getAug(augId).name)}" title="Choose a HEARTSTEEL member">
-   <option value="">♥ No sticker</option>
-   ${HEARTSTEEL_BONUSES.map(b=>`<option value="${escapeHtml(b.member)}" ${member===b.member?'selected':''}>${escapeHtml(b.member)}</option>`).join('')}
-  </select>
-  <small class="inline-heartsteel-effect" ${effect?'':'aria-hidden="true"'}>${effect||'&nbsp;'}</small>
+  <button type="button" class="sticker-picker-trigger" data-sticker-picker="${key}" data-sticker-member="${name}" data-sticker-focus="${focused?'1':'0'}" aria-haspopup="listbox" aria-expanded="false" aria-label="HEARTSTEEL sticker for ${escapeHtml(getAug(augId).name)}: ${name||'No sticker'}" draggable="false" title="Choose a HEARTSTEEL member and bonus">
+   <span class="sticker-current-text"><strong>${member?name:'♥ Choose sticker'}</strong>${member?`<small>${effect}</small>`:''}</span><span class="sticker-chevron" aria-hidden="true">▾</span>
+  </button>
  </div>`;
 }
+// Portal the menu directly to document.body so combo-card overflow cannot clip it.
+let activeStickerPopup=null;
+function closeStickerPopup(restoreFocus=false){
+ if(!activeStickerPopup)return;
+ const {button,popup}=activeStickerPopup;activeStickerPopup=null;
+ popup.remove();if(button?.isConnected){button.setAttribute('aria-expanded','false');if(restoreFocus)button.focus()}
+}
+function positionStickerPopup(){
+ if(!activeStickerPopup)return;
+ const {button,popup}=activeStickerPopup;if(!button.isConnected){closeStickerPopup();return}
+ const r=button.getBoundingClientRect(),pad=8;
+ const width=Math.min(326,window.innerWidth-pad*2),left=Math.max(pad,Math.min(r.right-width,window.innerWidth-pad-width));
+ popup.style.width=width+'px';popup.style.left=left+'px';
+ const popupHeight=popup.scrollHeight,below=window.innerHeight-r.bottom-pad,above=r.top-pad;
+ const openAbove=below<Math.min(popupHeight,260)&&above>below;
+ const available=Math.max(100,openAbove?above-5:below-5);
+ popup.style.maxHeight=Math.min(360,available)+'px';
+ const height=Math.min(popup.scrollHeight,360,available);
+ popup.style.top=(openAbove?Math.max(pad,r.top-5-height):Math.min(window.innerHeight-pad-height,r.bottom+5))+'px';
+ popup.dataset.side=openAbove?'above':'below';
+}
+function openStickerPopup(button){
+ if(activeStickerPopup?.button===button){closeStickerPopup();return}
+ closeStickerPopup();
+ const [comboId,augId]=button.dataset.stickerPicker.split('|'),focused=button.dataset.stickerFocus==='1';
+ const current=button.dataset.stickerMember||'';
+ const popup=document.createElement('div');popup.className='sticker-picker-popup';popup.setAttribute('role','listbox');
+ popup.setAttribute('aria-label','Choose HEARTSTEEL member and bonus');popup.tabIndex=-1;
+ const options=[{member:'',effect:'No bonus assigned'},...HEARTSTEEL_BONUSES];
+ popup.innerHTML=options.map(({member,effect})=>`<button type="button" class="sticker-picker-option ${member===current?'is-selected':''}" role="option" aria-selected="${member===current}" data-sticker-choice="${escapeHtml(member)}"><span class="sticker-option-lines"><strong>${escapeHtml(member||'No sticker')}</strong><small>${escapeHtml(effect)}</small></span>${member===current?'<span class="sticker-option-check" aria-hidden="true">✓</span>':''}</button>`).join('');
+ document.body.appendChild(popup);button.setAttribute('aria-expanded','true');
+ activeStickerPopup={button,popup};positionStickerPopup();
+ popup.addEventListener('click',e=>{
+  const choice=e.target.closest('[data-sticker-choice]');if(!choice)return;
+  e.preventDefault();e.stopPropagation();const value=choice.dataset.stickerChoice;
+  closeStickerPopup();
+  if(focused){
+   const b=state.builds.find(x=>x.id===libraryFocusedId),combo=comboById(b,comboId);
+   if(!combo||!hasComboHeadliner(combo,'HEARTSTEEL')||!combo.augments.includes(augId))return;
+   if(value)combo.stickers[augId]=value;else delete combo.stickers[augId];
+   b.updated=new Date().toLocaleDateString();persist();render();
+  }else setSticker(augId,value,comboId);
+ });
+ popup.addEventListener('keydown',e=>{
+  const choices=[...popup.querySelectorAll('[data-sticker-choice]')],index=choices.indexOf(document.activeElement);
+  if(e.key==='ArrowDown'||e.key==='ArrowUp'||e.key==='Home'||e.key==='End'){
+   e.preventDefault();let n=e.key==='Home'?0:e.key==='End'?choices.length-1:index+(e.key==='ArrowUp'?-1:1);
+   n=(n+choices.length)%choices.length;choices[n].focus();
+  }
+ });
+ const selected=popup.querySelector('.is-selected');(selected||popup.querySelector('[data-sticker-choice]'))?.focus({preventScroll:true});
+ if(selected){const midpoint=selected.offsetTop+selected.offsetHeight/2;popup.scrollTop=Math.max(0,midpoint-popup.clientHeight/2);}
+}
+function bindStickerPickerButtons(root){
+ root.querySelectorAll('[data-sticker-picker]').forEach(button=>{
+  button.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();openStickerPopup(button)});
+  button.addEventListener('pointerdown',e=>e.stopPropagation());
+  button.addEventListener('dragstart',e=>{e.preventDefault();e.stopPropagation()});
+ });
+}
+// Install document listeners only once; they work for editors and focused Quick Edit.
+document.addEventListener('pointerdown',e=>{
+ if(activeStickerPopup&&!activeStickerPopup.popup.contains(e.target)&&!activeStickerPopup.button.contains(e.target))closeStickerPopup();
+},true);
+document.addEventListener('keydown',e=>{
+ if(activeStickerPopup&&e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();closeStickerPopup(true)}
+},true);
+window.addEventListener('resize',()=>{if(activeStickerPopup)positionStickerPopup()});
+window.addEventListener('scroll',e=>{if(activeStickerPopup&&!activeStickerPopup.popup.contains(e.target))positionStickerPopup()},true);
 function renderComboRows(b){
  return `<div class="combo-stack">${b.augmentCombos.map((c,i)=>{
   const hasHeartsteel=hasComboHeadliner(c,'HEARTSTEEL');
@@ -606,7 +674,7 @@ function bindCards(root=document){root.querySelectorAll('[data-open-champion]').
  const unfocus=()=>{libraryFocusedId=null;libraryQuickEdit=false;focusLayoutEditing=false;render()};
  header.addEventListener('click',e=>{if(focusLayoutEditing||e.target.closest('button,a,input,select,textarea,label,[data-layout-ui]'))return;unfocus()});
  header.addEventListener('keydown',e=>{if(focusLayoutEditing||e.target!==header)return;if(e.key==='Enter'||e.key===' '){e.preventDefault();unfocus()}});
-});bindFocusedQuickEdit(root);bindFocusCustomization(root);root.querySelectorAll('[data-create-champion]').forEach(x=>x.onclick=()=>createBuildForChampion(x.dataset.createChampion));root.querySelectorAll('[data-go-view]').forEach(x=>x.onclick=()=>{abandonDraft();if(x.dataset.goView==='library'){libraryFocusedId=null;libraryQuickEdit=false;}state.view=x.dataset.goView;render()});root.querySelectorAll('[data-new-build]').forEach(x=>x.onclick=()=>createBuild());root.querySelectorAll('[data-export-all]').forEach(x=>x.onclick=exportAllData);root.querySelectorAll('[data-import-all]').forEach(x=>x.onclick=openImportAll);root.querySelectorAll('[data-import-share]').forEach(x=>x.onclick=openShareImportDialog);root.querySelectorAll('[data-share-build]').forEach(x=>x.onclick=e=>{e.stopPropagation();openShareBuildDialog(x.dataset.shareBuild)});const hs=root.querySelector('#homeSearch');if(hs)hs.oninput=e=>{state.homeSearch=e.target.value;const g=root.querySelector('#champGrid');if(g){g.innerHTML=renderChampionGrid();bindCards(g)}};for(const [id,field] of [['homeFilter','homeFilter'],['homeRole','homeRole'],['homeSort','homeSort']])root.querySelector('#'+id)?.addEventListener('change',e=>{state[field]=e.target.value;render()});root.querySelector('#addCustomItem')?.addEventListener('click',createCustomItem)}
+});bindStickerPickerButtons(root);bindFocusedQuickEdit(root);bindFocusCustomization(root);root.querySelectorAll('[data-create-champion]').forEach(x=>x.onclick=()=>createBuildForChampion(x.dataset.createChampion));root.querySelectorAll('[data-go-view]').forEach(x=>x.onclick=()=>{abandonDraft();if(x.dataset.goView==='library'){libraryFocusedId=null;libraryQuickEdit=false;}state.view=x.dataset.goView;render()});root.querySelectorAll('[data-new-build]').forEach(x=>x.onclick=()=>createBuild());root.querySelectorAll('[data-export-all]').forEach(x=>x.onclick=exportAllData);root.querySelectorAll('[data-import-all]').forEach(x=>x.onclick=openImportAll);root.querySelectorAll('[data-import-share]').forEach(x=>x.onclick=openShareImportDialog);root.querySelectorAll('[data-share-build]').forEach(x=>x.onclick=e=>{e.stopPropagation();openShareBuildDialog(x.dataset.shareBuild)});const hs=root.querySelector('#homeSearch');if(hs)hs.oninput=e=>{state.homeSearch=e.target.value;const g=root.querySelector('#champGrid');if(g){g.innerHTML=renderChampionGrid();bindCards(g)}};for(const [id,field] of [['homeFilter','homeFilter'],['homeRole','homeRole'],['homeSort','homeSort']])root.querySelector('#'+id)?.addEventListener('change',e=>{state[field]=e.target.value;render()});root.querySelector('#addCustomItem')?.addEventListener('click',createCustomItem)}
 // Layout customizer is independent from Quick edit and never mutates saved build content.
 function bindFocusCustomization(root){
  const card=root.querySelector('.library-focused-card');
@@ -857,10 +925,6 @@ function bindFocusedQuickEdit(root){
  if(!libraryQuickEdit)return; // Read-only focus mode: combo selection still works; mutation is blocked.
  bindComboCoreControls(card,b);
  bindHeadlinerPickers(card,'data-focus-headliner-choice',apply,b);
- card.querySelectorAll('[data-focus-sticker]').forEach(el=>el.addEventListener('change',()=>{
-   const [combo,id]=el.dataset.focusSticker.split('|');const c=comboById(b,combo);
-   if(!c)return;if(el.value)c.stickers[id]=el.value;else delete c.stickers[id];apply();
- }));
  for(const k of ['first','second'])card.querySelectorAll(`[data-focus-penta-${k}]`).forEach(el=>el.addEventListener('change',()=>{
    const c=comboById(b,el.dataset['focusPenta'+k[0].toUpperCase()+k.slice(1)]);
    if(!c)return;
@@ -901,6 +965,7 @@ function bindSiteSpacing(root){
  root.querySelector('[data-reset-site-space]')?.addEventListener('click',()=>changeFocusLayout(l=>{l.spaces[state.view]=defaultSpace();}));
 }
 function render(){
+ closeStickerPopup();
  document.body.classList.toggle('index-mode',state.view!=='builds');
  document.body.classList.toggle('editor-mode',state.view==='builds');
  document.body.classList.toggle('library-page-mode',state.view==='library');
@@ -1188,9 +1253,6 @@ function bindView(){
   }
 
  bindHeadlinerPickers(c,'data-combo-headliner-choice',()=>{touch();render()});
- c.querySelectorAll('[data-sticker-for]').forEach(x=>x.addEventListener('change',()=>{
-   const [combo,id]=x.dataset.stickerFor.split('|');setSticker(id,x.value,combo);
- }));
  for(const k of ['first','second'])c.querySelectorAll(`[data-combo-penta-${k}]`).forEach(x=>x.addEventListener('change',()=>{
    const id=x.dataset['comboPenta'+k[0].toUpperCase()+k.slice(1)],combo=comboById(build(),id);
    if(!combo)return;
