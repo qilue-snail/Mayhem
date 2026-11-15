@@ -1,3 +1,170 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Mayhem Library — Champions & Personal Builds</title><link rel="stylesheet" href="styles.css"></head><body><header><div class="brand">✦ <i>MAYHEM</i> <span>LIBRARY</span></div><nav class="topnav"><button data-view="home" class="active">Champions</button><button data-view="library">My Builds</button><button data-view="augments">Augments</button><button data-view="items">Items</button><button data-view="headliners">Headliners</button></nav><div class="spacer"></div><button class="btn ghost site-spacing-btn" id="siteSpacingToggle" type="button">▦ Page spacing</button><span class="tag" id="patchTag">Patch 26.22</span></header><section id="legendaryGuide" class="legendary-guide" aria-label="Weapon of Destiny quick reference"><div class="guide-title">✦ Weapon of Destiny</div><div class="legendary-guide-contents"><p class="guide-intro">Quick reference for your first Legendary item</p><table class="legendary-table"><thead><tr><th>Champion type</th><th>First Legendary</th></tr></thead><tbody><tr><td>Fighters / Assassins</td><td>Endless Hunger</td></tr><tr><td>ADCs</td><td>Blade of the Ruined King</td></tr><tr><td>Mages</td><td>Stormsurge</td></tr><tr><td>Tanks</td><td>Heartsteel</td></tr><tr><td>Enchanters</td><td>Dawncore</td></tr></tbody></table></div></section><div class="layout"><aside><div class="row between"><strong>My builds</strong><button class="btn primary smallbtn" id="createBtn">+ New</button></div><div style="margin-top:12px"><input id="sideSearch" placeholder="Search builds..." aria-label="Search builds"></div><div id="sidebarList" class="side-builds"></div><hr class="divider"><div class="side-title">Your data</div><div class="row"><button class="btn smallbtn" id="exportBtn">Export</button><button class="btn smallbtn" id="importBtn">Import</button><input type="file" id="importFile" accept="application/json,.json" hidden></div><p class="hint">Saved in this browser. Export regularly to back up your builds and custom data.</p><div class="side-title">Public data</div><button class="btn smallbtn" id="refreshBtn">↻ Refresh database</button><p class="status" id="dataStatus">Loading data…</p></aside><main class="main"><div id="content"></div></main></div><footer>Personal fan-made ARAM Mayhem tracker • Data: <a href="https://arammayhem.com/data/" target="_blank" rel="noopener">arammayhem.com</a> (CC BY 4.0, limited-sample augment pick rates) • Game assets © Riot Games • Not endorsed by Riot Games. Public information may lag patches; you can manually edit augment entries.</footer><div class="toast" id="toast" role="status"></div>
-<script id="mayhemDetailPack" type="application/json">{"patch":"26.22","source":"https://arammayhem.com/augments/","augments":{"windspeakers-blessing":{"description":"Your or allies' heals and shields on yourself, or your heals and shields on allies, grant the target 30 to 60 bonus armor and bonus magic resistance for 3 seconds.","image":"https://arammayhem.com/augments/Windspeaker%27s_Blessing_mayhem_augment.webp","captured":"2026-11-11"}}}</script>
-<div id="shareDialogHost" class="share-dialog-host"></div><div id="quickAugHost" class="quick-aug-host"></div><input type="file" id="shareImportFile" accept=".json,application/json" hidden><script src="app.js"></script><div id="detailHost"></div></body></html>
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <title>Mayhem Library — Champions & Personal Builds</title>
+  <link href="styles.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <header>
+   <div class="brand">✦ <i>MAYHEM</i> <span>LIBRARY</span></div>
+   <nav class="topnav">
+    <button class="active" data-view="home">
+     Champions
+    </button>
+    <button data-view="library">
+     My Builds
+    </button>
+    <button data-view="augments">
+     Augments
+    </button>
+    <button data-view="items">
+     Items
+    </button>
+    <button data-view="headliners">
+     Headliners
+    </button>
+   </nav>
+   <div class="spacer">
+   </div>
+   <button class="btn ghost site-spacing-btn" id="siteSpacingToggle" type="button">
+    ▦ Page spacing
+   </button>
+   <span class="tag" id="patchTag">
+    Patch 26.22
+   </span>
+  </header>
+  <section aria-label="Weapon of Destiny quick reference" class="legendary-guide" id="legendaryGuide">
+   <div class="guide-title">
+    ✦ Weapon of Destiny
+   </div>
+   <div class="legendary-guide-contents">
+    <p class="guide-intro">
+     Quick reference for your first Legendary item
+    </p>
+    <table class="legendary-table">
+     <thead>
+      <tr>
+       <th>
+        Champion type
+       </th>
+       <th>
+        First Legendary
+       </th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td>
+        Fighters / Assassins
+       </td>
+       <td>
+        Endless Hunger
+       </td>
+      </tr>
+      <tr>
+       <td>
+        ADCs
+       </td>
+       <td>
+        Blade of the Ruined King
+       </td>
+      </tr>
+      <tr>
+       <td>
+        Mages
+       </td>
+       <td>
+        Stormsurge
+       </td>
+      </tr>
+      <tr>
+       <td>
+        Tanks
+       </td>
+       <td>
+        Heartsteel
+       </td>
+      </tr>
+      <tr>
+       <td>
+        Enchanters
+       </td>
+       <td>
+        Dawncore
+       </td>
+      </tr>
+     </tbody>
+    </table>
+   </div>
+  </section>
+  <div class="layout">
+   <aside>
+    <div class="row between">
+     <strong>
+      My builds
+     </strong>
+     <button class="btn primary smallbtn" id="createBtn">
+      + New
+     </button>
+    </div>
+    <div style="margin-top:12px">
+     <input aria-label="Search builds" id="sideSearch" placeholder="Search builds..."/>
+    </div>
+    <div class="side-builds" id="sidebarList">
+    </div>
+    <hr class="divider"/>
+    <div class="side-title">
+     Your data
+    </div>
+    <div class="row">
+     <button class="btn smallbtn" id="exportBtn">
+      Export
+     </button>
+     <button class="btn smallbtn" id="importBtn">
+      Import
+     </button>
+     <input accept="application/json,.json" hidden="" id="importFile" type="file"/>
+    </div>
+    <p class="hint">
+     Saved in this browser. Export regularly to back up your builds and custom data.
+    </p>
+    <div class="side-title">
+     Public data
+    </div>
+    <button class="btn smallbtn" id="refreshBtn">
+     ↻ Refresh database
+    </button>
+    <p class="status" id="dataStatus">
+     Loading data…
+    </p>
+   </aside>
+   <main class="main">
+    <div id="content">
+    </div>
+   </main>
+  </div>
+  <footer>
+   Personal fan-made ARAM Mayhem tracker • Data:
+   <a href="https://arammayhem.com/data/" rel="noopener" target="_blank">
+    arammayhem.com
+   </a>
+   (CC BY 4.0, limited-sample augment pick rates) • Game assets © Riot Games • Not endorsed by Riot Games. Public information may lag patches; you can manually edit augment entries.
+  </footer>
+  <div class="toast" id="toast" role="status">
+  </div>
+  <script id="mayhemDetailPack" type="application/json">
+   {"patch":"26.22","source":"https://arammayhem.com/augments/","augments":{"windspeakers-blessing":{"description":"Your or allies' heals and shields on yourself, or your heals and shields on allies, grant the target 30 to 60 bonus armor and bonus magic resistance for 3 seconds.","image":"https://arammayhem.com/augments/Windspeaker%27s_Blessing_mayhem_augment.webp","captured":"2026-11-11"}}}
+  </script>
+  <div class="share-dialog-host" id="shareDialogHost">
+  </div>
+  <div class="quick-aug-host" id="quickAugHost">
+  </div>
+  <input accept=".json,application/json" hidden="" id="shareImportFile" type="file"/>
+  <script src="app.js">
+  </script>
+  <div id="detailHost">
+  </div>
+ </body>
+</html>
