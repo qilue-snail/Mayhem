@@ -2,6 +2,59 @@
     'use strict';
     const STORE = 'mayhem-library-v1';
     const DATA_URL = 'https://arammayhem.com/data/v1/latest/augments.json';
+    // ARAMMayhem published these Patch 26.23 augments on its augment pages before
+    // publishing 26.23 match statistics. Never fabricate pick rates or tier ranks.
+    // The public latest/augments.json remains authoritative when it catches up.
+    const RELEASED_AUGMENTS = [
+        {
+            id: 'fortified', name: 'Fortified', rarity: 'silver', introducedPatch: '26.23',
+            description: 'Gain 20 Armor, then increase your bonus Armor by 25%.',
+            url: 'https://arammayhem.com/augments/fortified/'
+        },
+        {
+            id: 'mystic_guard', name: 'Mystic Guard', rarity: 'silver', introducedPatch: '26.23',
+            description: 'Gain 20 Magic Resist, then increase your bonus Magic Resist by 25%.',
+            url: 'https://arammayhem.com/augments/mystic-guard/'
+        },
+        {
+            id: 'slime_time', name: 'Slime Time', rarity: 'silver', introducedPatch: '26.23',
+            description: 'Every few seconds, Autocast a burst of slime from your body, dealing magic damage to nearby enemies. If you hit a champion, secrete a blob that heals you when walked over.',
+            url: 'https://arammayhem.com/augments/slime-time/'
+        },
+        {
+            id: 'steadfaster_presence', name: 'Steadfaster Presence', rarity: 'gold', introducedPatch: '26.23',
+            description: "Gain bonus Armor, Magic Resist, and Tenacity. This bonus increases when you're below 40% maximum Health.",
+            url: 'https://arammayhem.com/augments/steadfaster-presence/'
+        }
+    ];
+    function patchValue(patch) {
+        const [major = 0, minor = 0] = String(patch || '').split('.').map(Number);
+        return (Number(major) || 0) * 1000 + (Number(minor) || 0);
+    }
+    function currentGamePatch() {
+        return patchValue(state.patch) >= patchValue('26.23') ? state.patch : '26.23';
+    }
+    function augmentReleasePending(augment) {
+        return augment && augment.introducedPatch === '26.23' && augment.pickRate == null && !augment.retiredPatch;
+    }
+    function mergeNewReleaseAugments(rows) {
+        // Deduplicate by *name* because official augmentId identifiers may differ
+        // from these provisional stable IDs. Favor the live public feed entry.
+        const merged = [...rows];
+        const existingNames = new Set(merged.map(a => slug(a.name)));
+        for (const a of RELEASED_AUGMENTS) {
+            if (existingNames.has(slug(a.name))) continue;
+            merged.push({
+                id: a.id, legacyId: a.id, name: a.name, rarity: a.rarity,
+                introducedPatch: a.introducedPatch, retiredPatch: null,
+                description: '', pickRate: null, pickRateRank: null,
+                source: 'new-release', url: a.url
+            });
+            existingNames.add(slug(a.name));
+        }
+        return merged;
+    }
+
     const DD = 'https://ddragon.leagueoflegends.com/cdn/';
     const CDRAGON = 'https://raw.communitydragon.org/latest/';
     const CDRAGON_ARENA = CDRAGON + 'cdragon/arena/en_us.json';
@@ -73,7 +126,7 @@
         return state.champions.find(c => keyName(c.id) === keyName(idOrName) || keyName(c.name) === keyName(idOrName)) || null;
     }
     const state = {
-        itemNotes: {}, view: 'home', selected: null, builds: [], overrides: {}, augments: fallbackData(), patch: '26.22', champions: fallbackChampions(), items: FALLBACK_ITEMS.map(([id, name, category, cost]) => ({ id, name, category, cost, gold: { total: cost }, source: 'starter' })), riotItems: new Map(), itemSource: 'Offline starter items · refresh for the current Mayhem catalog', itemCategory: 'all', ddver: '16.22.1', augSearch: '', augRarity: 'all', itemSearch: '', status: 'Starter list (offline fallback)', newOnly: false, homeSearch: '', homeFilter: 'all', homeRole: 'all', homeSort: 'az', championFocus: '', manualItems: {}, mayhemItems: [], hasMayhemItems: false, arenaInfo: new Map(),
+        itemNotes: {}, view: 'home', selected: null, builds: [], overrides: {}, augments: mergeNewReleaseAugments(fallbackData()), patch: '26.22', champions: fallbackChampions(), items: FALLBACK_ITEMS.map(([id, name, category, cost]) => ({ id, name, category, cost, gold: { total: cost }, source: 'starter' })), riotItems: new Map(), itemSource: 'Offline starter items · refresh for the current Mayhem catalog', itemCategory: 'all', ddver: '16.22.1', augSearch: '', augRarity: 'all', itemSearch: '',         status: 'Offline starter list + 4 new augments from Patch 26.23 (stats pending)', newOnly: false, homeSearch: '', homeFilter: 'all', homeRole: 'all', homeSort: 'az', championFocus: '', manualItems: {}, mayhemItems: [], hasMayhemItems: false, arenaInfo: new Map(),
     };
     try {
         const s = JSON.parse(localStorage.getItem(STORE) || '{}');
@@ -193,7 +246,8 @@
             if (MAYHEM_DETAIL_PACK[key])
                 return MAYHEM_DETAIL_PACK[key];
         }
-        return null;
+        const released = RELEASED_AUGMENTS.find(x => slug(x.name) === slug(a.name));
+        return released ? { description: released.description, captured: 'Nov 19, 2026' } : null;
     }
     const VERIFIED_MAYHEM_EFFECTS = {
         'windspeakers-blessing': { patch: '26.22', tier: 'S', description: "Healing or shielding an ally (or receiving healing and shields) grants 30–60 bonus Armor and Magic Resistance for 3 seconds." },
@@ -258,7 +312,7 @@
         if (Number.isFinite(Number(a.pickRateRank)) && a.pickRateRank != null)
             cells.push(['Rank', '#' + a.pickRateRank, a.previousPickRateRank != null ? 'Previously #' + a.previousPickRateRank : 'Current data']);
         if (!cells.length)
-            cells.push(['Rarity', (a.rarity || 'Unknown').toUpperCase(), 'Custom or offline augment']);
+            cells.push(augmentReleasePending(a) ? ['Pick rate', 'Pending', 'New in Patch 26.23 · 26.22 stats still published'] : ['Rarity', (a.rarity || 'Unknown').toUpperCase(), 'Custom or offline augment']);
         return '<div class="aug-meta-grid">' + cells.map(([label, value, small]) => `<div class="aug-meta-cell"><span class="meta-label">${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong><small>${escapeHtml(small)}</small></div>`).join('') + '</div>';
     }
     function augDescription(a) {
@@ -314,7 +368,7 @@
         return `<div class="augsymbol ${escapeHtml(a.rarity || 'silver')} ${urls.length ? '' : 'no-art'}" title="${escapeHtml(a.name)} — source game icon or clearly labeled unavailable">${urls.length ? `<img src="${escapeHtml(urls[0])}" data-imgs="${escapeHtml(urls.join('|'))}" data-pos="0" loading="lazy" alt="" class="aug-art-image" referrerpolicy="no-referrer">` : ''}<span class="fallback">${FALLBACK_ART}</span></div>`;
     }
     function rarityLabel(a) {
-        return `<span class="rarity ${escapeHtml(a.rarity)}">${escapeHtml(a.rarity || 'Silver')}${a.retiredPatch ? ' · retired' : ''}</span>`;
+        return `<span class="rarity ${escapeHtml(a.rarity)}">${escapeHtml(a.rarity || 'Silver')}${a.retiredPatch ? ' · retired' : augmentReleasePending(a) ? ' · new 26.23' : ''}</span>`;
     }
     function roleBadge(c) {
         const role = roleOf(c);
@@ -872,7 +926,7 @@
         return {
             order: [...PAGE_PANELS], slots: ['focus', 'others', 'guide'], widths: { ...DEFAULT_PAGE_WIDTHS }, mode: 'columns', pattern: 'split-right',
             guideVisible: true, heights: { guide: 0, focus: 0, others: 0 }, innerWidths: { guide: 100, focus: 100, others: 100 },
-            guidePosition: 'inline', guideAlign: 'left', spaceLeft: 0, spaceRight: 0, spaceTop: 0, spaceBottom: 0, panelGap: 12, stackGap: 0
+            guidePosition: 'inline', guideAlign: 'left', spaceLeft: 0, spaceRight: 0, spaceTop: 0, spaceBottom: 0, panelGap: 12, stackGap: 0, overviewPositions: {}, overviewLayoutWidth: 0, focusReferenceWidth: 0
         };
     }
     function normalizePageLayout(raw) {
@@ -909,6 +963,27 @@
         page.spaceBottom = cap(raw.spaceBottom, 320);
         page.panelGap = raw.panelGap === undefined ? 12 : cap(raw.panelGap, 32);
         page.stackGap = raw.stackGap === undefined ? 0 : cap(raw.stackGap, 32);
+        // Each champion tile can be placed independently in the un-focused overview.
+        // These coordinates belong to layout preferences, never to saved build data.
+        page.overviewLayoutWidth = Math.max(0, Math.min(10000, Number(raw.overviewLayoutWidth) || 0));
+        // The desktop width at which focused-panel percentages were chosen.
+        // Holding this reference prevents cards from shrinking while unused
+        // horizontal space is still available as the window gets narrower.
+        page.focusReferenceWidth = Math.max(0, Math.min(10000, Number(raw.focusReferenceWidth) || 0));
+        if (raw.overviewPositions && typeof raw.overviewPositions === 'object' && !Array.isArray(raw.overviewPositions)) {
+            for (const [key, pos] of Object.entries(raw.overviewPositions)) {
+                if ((key === 'guide' || key.startsWith('champ:')) && key.length < 140 && pos && typeof pos === 'object') {
+                    const x = Number(pos.x), y = Number(pos.y), w = Number(pos.w);
+                    if ([x, y, w].every(Number.isFinite)) {
+                        page.overviewPositions[key] = {
+                            x: Math.max(0, Math.min(100, x)),
+                            y: Math.max(0, Math.min(6000, Math.round(y))),
+                            w: Math.max(key === 'guide' ? 260 : 198, Math.min(700, Math.round(w)))
+                        };
+                    }
+                }
+            }
+        }
         // V24 stored secondary widths as fractions of their grid track, while its UI
         // displayed whole-page percentages. Normalize old settings once to a single unit.
         if (raw.pageWidthVersion !== 2 && ['split-right', 'split-left', 'focus-top', 'focus-bottom'].includes(page.pattern)) {
@@ -1110,6 +1185,207 @@
             return `<button class="library-compact-card" data-focus-champion="${escapeHtml(key)}" aria-label="Focus ${escapeHtml(name)} — ${count} saved ${count === 1 ? 'build' : 'builds'}"><img class="compact-portrait" src="${image}" alt="" loading="lazy" onerror="this.style.opacity='.2'"><div class="compact-details"><strong>${escapeHtml(name)}</strong><span class="compact-subtitle">${count === 1 ? escapeHtml(first.title || 'New build') : `${count} saved builds`}</span><span class="role-line">${escapeHtml(first.style || roleOf(champion))} · ${totalCombos} ${totalCombos === 1 ? 'combo' : 'combos'}</span></div><span class="compact-switch" aria-hidden="true">⤢</span></button>`;
         return `<button class="library-summary-card" data-focus-champion="${escapeHtml(key)}" aria-label="Focus ${escapeHtml(name)} — ${count} saved ${count === 1 ? 'build' : 'builds'}"><img class="library-summary-portrait" src="${image}" loading="lazy" alt="" onerror="this.style.opacity='.24'"><span class="library-summary-content"><strong class="library-summary-name">${escapeHtml(name)}</strong><span class="library-summary-title" title="${count === 1 ? escapeHtml(first.title || 'New build') : count + ' saved builds'}">${count === 1 ? escapeHtml(first.title || 'New build') : `${count} saved builds`}</span><span class="library-summary-meta">${escapeHtml(first.style || roleOf(champion))} · ${totalCombos} ${totalCombos === 1 ? 'combo' : 'combos'}</span>${headliners.length ? `<span class="library-summary-headliners" title="${escapeHtml(headliners.join(', '))}">${escapeHtml(headliners.join(' · '))}</span>` : ''}</span><span class="library-summary-arrow" aria-hidden="true">⤢</span></button>`;
     }
+    // The overview is an independent full-width canvas, not a subset of the
+    // focused-build panel. Each champion and the guide has its own position.
+    // Tiles adapt to the *actual board width*: reduce their width down to the
+    // minimum before wrapping, and reserve the guide at the right only when two
+    // champion tiles still fit beside it. Moving a tile records its desktop
+    // position; smaller windows pack those tiles fluidly without overwriting it.
+    function overviewTilePositions(groups, page, boardWidth) {
+        const content = document.getElementById('content');
+        const canvasWidth = Math.max(1, boardWidth || (content?.clientWidth || window.innerWidth - 36) *
+            (100 - page.spaceLeft - page.spaceRight) / 100);
+        const saved = page.overviewPositions || {};
+        const positions = {};
+        const taken = [];
+        const ids = groups.map(g => 'champ:' + g.key);
+        const gap = 9, minCard = 198, maxCard = 320;
+        const guideW = Math.min(canvasWidth, saved.guide?.w || 302);
+        const guideOnRight = page.guideVisible && canvasWidth >= guideW + 2 * minCard + 2 * gap;
+        const cardArea = guideOnRight ? canvasWidth - guideW - gap : canvasWidth;
+        const cols = Math.max(1, Math.floor((cardArea + gap) / (minCard + gap)));
+        const cardW = Math.max(Math.min(canvasWidth, minCard),
+            Math.min(maxCard, Math.floor((cardArea - (cols - 1) * gap) / cols)));
+        const tileHeight = 102, rowStep = 112;
+        const collision = (a, b) => a.x < b.x + b.w + gap && a.x + a.w + gap > b.x &&
+            a.y < b.y + b.h + gap && a.y + a.h + gap > b.y;
+        const reserve = (id, p, h) => {
+            positions[id] = { x: p.x, y: p.y, w: p.w };
+            taken.push({ x: p.x, y: p.y, w: p.w, h });
+        };
+        const fitPosition = (id, requested, height) => {
+            const x = Math.max(0, Math.min(canvasWidth - requested.w, requested.x));
+            const y = Math.max(0, requested.y);
+            const first = { x, y, w: requested.w, h: height };
+            if (!taken.some(p => collision(first, p))) return { x, y, w: requested.w };
+            // Dragging a tile onto another tile moves it to the nearest free row.
+            for (let dy = 0; dy < 5000; dy += rowStep) {
+                for (const sx of [x, ...Array.from({ length: cols + 2 }, (_, c) => c * (cardW + gap))]) {
+                    if (sx + requested.w > canvasWidth + .5) continue;
+                    const p = { x: sx, y: y + dy, w: requested.w, h: height };
+                    if (!taken.some(other => collision(p, other))) return p;
+                }
+            }
+            return { x: 0, y: y + 5000, w: requested.w };
+        };
+        // The guide normally sits at the right edge, independently of cards.
+        // At narrow widths, the guide flows after the cards instead of wasting
+        // most of the row that could have held champion cards.
+        if (guideOnRight) {
+            const old = saved.guide;
+            const canUseSaved = old && (!page.overviewLayoutWidth ||
+                canvasWidth >= page.overviewLayoutWidth - 8);
+            const desired = canUseSaved
+                ? { x: (old.x || 0) * canvasWidth / 100, y: old.y || 0, w: Math.min(canvasWidth, old.w || guideW) }
+                : { x: canvasWidth - guideW, y: 0, w: guideW };
+            reserve('guide', desired, 254);
+        }
+        const adaptive = page.overviewLayoutWidth && canvasWidth < page.overviewLayoutWidth - 8;
+        const ordered = adaptive ? ids.slice().sort((a, b) => {
+            const ap = saved[a], bp = saved[b];
+            if (!ap || !bp) return ap ? -1 : bp ? 1 : ids.indexOf(a) - ids.indexOf(b);
+            return ap.y - bp.y || ap.x - bp.x;
+        }) : ids;
+        // When the viewport matches the customized width, honor saved positions.
+        // At narrower widths, keep the card order but refill available columns.
+        if (!adaptive) for (const id of ordered) {
+            const s = saved[id];
+            if (!s) continue;
+            const w = Math.min(canvasWidth, s.w);
+            const desired = { x: Math.max(0, (s.x || 0) * canvasWidth / 100), y: s.y || 0, w };
+            const pos = fitPosition(id, desired, tileHeight);
+            reserve(id, pos, tileHeight);
+        }
+        for (const id of ordered) {
+            if (positions[id]) continue;
+            let location = null;
+            const slots = Math.max(1, Math.floor((cardArea - cardW + gap) / (cardW + gap)) + 1);
+            for (let row = 0; row < 100 && !location; row++) {
+                for (let col = 0; col < slots; col++) {
+                    const x = col * (cardW + gap);
+                    if (x + cardW > cardArea + .5) continue;
+                    const p = { x, y: row * rowStep, w: cardW, h: tileHeight };
+                    if (!taken.some(other => collision(p, other))) { location = p; break; }
+                }
+            }
+            reserve(id, location || { x: 0, y: taken.length * rowStep, w: cardW }, tileHeight);
+        }
+        if (page.guideVisible && !guideOnRight) {
+            const maxBottom = Math.max(0, ...ids.map(id => positions[id].y + tileHeight));
+            reserve('guide', { x: 0, y: maxBottom + gap, w: guideW }, 254);
+        }
+        return { positions, canvasWidth };
+    }
+    function renderOverviewBoard(groups, page, guideHtml) {
+        const { positions, canvasWidth } = overviewTilePositions(groups, page);
+        const tile = (id, child, title, isGuide = false) => {
+            const pos = positions[id];
+            if (!pos) return '';
+            const x = Math.round(pos.x / canvasWidth * 100000) / 1000;
+            const drag = focusLayoutEditing ? `<span class="overview-tile-grip" data-overview-grip title="Drag ${escapeHtml(title)} anywhere on the page" role="button" tabindex="0" aria-label="Drag ${escapeHtml(title)}">⠿</span><span class="overview-tile-resizer" data-overview-resize title="Drag to change width" role="separator" aria-label="Resize ${escapeHtml(title)}"></span>` : '';
+            return `<div class="overview-free-tile${isGuide ? ' overview-guide-tile' : ''}${focusLayoutEditing ? ' is-customizing' : ''}" data-overview-tile="${escapeHtml(id)}" style="--overview-x:${x}%;--overview-y:${pos.y}px;--overview-w:${pos.w}px">${child}${drag}</div>`;
+        };
+        const cards = groups.map(g => tile('champ:' + g.key, libraryGroupCard(g), g.name)).join('');
+        const guide = page.guideVisible ? tile('guide', `<section class="library-page-panel page-panel-guide">${guideHtml}</section>`, 'Weapon of Destiny', true) : '';
+        const maxBottom = Math.max(300, ...Object.entries(positions).map(([key, pos]) => pos.y + (key === 'guide' ? 255 : 110) + 12));
+        return `<div class="overview-free-board${focusLayoutEditing ? ' overview-customizing' : ''}" data-overview-board style="min-height:${maxBottom}px">${cards}${guide}</div>`;
+    }
+    function bindOverviewBoard(root) {
+        const board = root.querySelector('[data-overview-board]');
+        if (!board) return;
+        const updateHeight = () => {
+            let bottom = 290;
+            for (const el of board.querySelectorAll('[data-overview-tile]')) {
+                bottom = Math.max(bottom, el.offsetTop + el.offsetHeight + 10);
+            }
+            board.style.minHeight = Math.ceil(bottom) + 'px';
+        };
+        updateHeight();
+        let moving = false, lastWidth = 0;
+        const recalculate = () => {
+            if (!board.isConnected || moving) return;
+            const width = board.clientWidth;
+            if (!width || Math.abs(width - lastWidth) < 1) return;
+            lastWidth = width;
+            const ids = [...board.querySelectorAll('[data-overview-tile^="champ:"]')]
+                .map(x => ({ key: x.dataset.overviewTile.slice(6) }));
+            const { positions } = overviewTilePositions(ids, focusLayout.page, width);
+            for (const item of board.querySelectorAll('[data-overview-tile]')) {
+                const pos = positions[item.dataset.overviewTile];
+                if (!pos) continue;
+                item.style.removeProperty('left');
+                item.style.removeProperty('top');
+                item.style.removeProperty('width');
+                item.style.setProperty('--overview-x', (pos.x / width * 100) + '%');
+                item.style.setProperty('--overview-y', pos.y + 'px');
+                item.style.setProperty('--overview-w', pos.w + 'px');
+            }
+            updateHeight();
+        };
+        if (typeof ResizeObserver !== 'undefined') {
+            const resizeObserver = new ResizeObserver(() => {
+                if (!board.isConnected) { resizeObserver.disconnect(); return; }
+                recalculate();
+            });
+            resizeObserver.observe(board);
+        }
+        recalculate();
+        if (!focusLayoutEditing) return;
+        board.querySelectorAll('[data-overview-grip],[data-overview-resize]').forEach(handle => {
+            handle.addEventListener('pointerdown', event => {
+                if (event.button !== 0 || window.innerWidth <= 680) return;
+                event.preventDefault();
+                event.stopPropagation();
+                const item = handle.closest('[data-overview-tile]');
+                if (!item) return;
+                const resizing = handle.hasAttribute('data-overview-resize');
+                const area = board.getBoundingClientRect();
+                const rect = item.getBoundingClientRect();
+                const oldX = rect.left - area.left;
+                const oldY = rect.top - area.top;
+                const oldW = rect.width;
+                let nextX = oldX, nextY = oldY, nextW = oldW;
+                moving = true;
+                item.classList.add('overview-moving');
+                const move = e => {
+                    const dx = e.clientX - event.clientX;
+                    const dy = e.clientY - event.clientY;
+                    if (resizing) {
+                        const minimum = item.dataset.overviewTile === 'guide' ? 260 : 198;
+                        nextW = Math.max(minimum, Math.min(600, Math.min(area.width - oldX, oldW + dx)));
+                        item.style.width = nextW + 'px';
+                    } else {
+                        nextX = Math.max(0, Math.min(area.width - oldW, oldX + dx));
+                        nextY = Math.max(0, Math.min(6000, oldY + dy));
+                        item.style.left = nextX + 'px';
+                        item.style.top = nextY + 'px';
+                    }
+                    updateHeight();
+                };
+                const finish = () => {
+                    handle.removeEventListener('pointermove', move);
+                    handle.removeEventListener('pointerup', finish);
+                    handle.removeEventListener('pointercancel', finish);
+                    moving = false;
+                    item.classList.remove('overview-moving');
+                    const id = item.dataset.overviewTile;
+                    changeFocusLayout(layout => {
+                        layout.page.overviewPositions ||= {};
+                        layout.page.overviewLayoutWidth = Math.round(area.width);
+                        layout.page.overviewPositions[id] = {
+                            x: Math.round(nextX / Math.max(1, area.width) * 100000) / 1000,
+                            y: Math.round(nextY),
+                            w: Math.round(nextW)
+                        };
+                    });
+                };
+                handle.setPointerCapture(event.pointerId);
+                handle.addEventListener('pointermove', move);
+                handle.addEventListener('pointerup', finish);
+                handle.addEventListener('pointercancel', finish);
+            });
+        });
+    }
     function renderLibraryView() {
         const groups = championBuildGroups();
         const focusedGroup = groups.find(g => g.builds.some(b => b.id === libraryFocusedId));
@@ -1124,10 +1400,17 @@
             focus: focused ? `<div class="row between library-focus-toolbar"><span class="hint">${escapeHtml(focusedGroup.name)} · ${focusedGroup.builds.length} ${focusedGroup.builds.length === 1 ? 'build' : 'builds'}</span><button class="btn smallbtn ghost" data-collapse-library>← Show all champions</button></div>${focusedLibraryCard(focused, focusedGroup)}` : (focusLayoutEditing ? placeholder : overview),
             others: otherCards
         };
-        const overviewMode = !focused && !focusLayoutEditing;
+        const overviewMode = !focused;
         const keys = page.slots.filter(k => (k !== 'guide' || page.guideVisible) && (!overviewMode || k !== 'others'));
         const mainKey = page.slots[0];
         const pattern = page.pattern;
+        if (focused && pattern.startsWith('split-') && !page.focusReferenceWidth && window.innerWidth > 800) {
+            const canvasWidth = (document.getElementById('content')?.clientWidth || window.innerWidth - 36) *
+                (100 - page.spaceLeft - page.spaceRight) / 100;
+            page.focusReferenceWidth = Math.round(Math.max(1440, canvasWidth));
+            // Layout settings are independent from builds; no build is modified.
+            saveFocusLayout();
+        }
         const renderPanel = (key, slot, sideTrack = 100) => {
             const width = page.widths[key], height = page.heights[key] || 0;
             const inner = (slot === 'upper' || slot === 'lower') && pattern.startsWith('split-') ? Math.min(100, Math.round(width / Math.max(1, sideTrack) * 100)) : 100;
@@ -1136,8 +1419,10 @@
         const slots = page.slots.filter(k => keys.includes(k));
         const mainWidth = Math.max(PAGE_MIN[mainKey], Math.min(85, page.widths[mainKey] || 60));
         const sideKeys = slots.filter(k => k !== mainKey);
-        const gapFraction = page.panelGap / Math.max(1, window.innerWidth - 36) * 100;
-        const sideWidth = Math.min(Math.max(0, 100 - mainWidth - gapFraction), Math.max(0, ...sideKeys.map(k => page.widths[k])));
+        const sideWidth = Math.max(0, ...sideKeys.map(k => page.widths[k]));
+        const referenceWidth = page.focusReferenceWidth || Math.max(1440, window.innerWidth - 36);
+        const primaryPreferred = Math.round(referenceWidth * mainWidth / 100);
+        const sidePreferred = Math.round(referenceWidth * sideWidth / 100);
         const layoutPanels = () => {
             if (pattern.startsWith('split-')) {
                 const primary = `<div class="page-main-track" style="--primary-width:${mainWidth}%">${keys.includes(mainKey) ? renderPanel(mainKey, 'primary') : ''}</div>`;
@@ -1151,15 +1436,16 @@
             }
             return slots.map(k => renderPanel(k, k === mainKey ? 'primary' : slots.indexOf(k) === 1 ? 'upper' : 'lower')).join('');
         };
-        const mosaic = `<div class="page-mosaic mode-${pattern} ${overviewMode ? 'is-library-overview' : ''}" data-page-mosaic style="--primary-width:${mainWidth}%;--side-width:${sideWidth}%;--panel-gap:${page.panelGap}px;--stack-gap:${page.stackGap}px">${layoutPanels()}</div>`;
-        const cards = `<div class="library-page-grid" data-page-grid style="--page-space-left:${page.spaceLeft}%;--page-space-right:${page.spaceRight}%;--page-space-top:${page.spaceTop}px;--page-space-bottom:${page.spaceBottom}px">${mosaic}</div>`;
+        const mosaic = `<div class="page-mosaic mode-${pattern} ${overviewMode ? 'is-library-overview' : ''}" data-page-mosaic style="--primary-width:${mainWidth}%;--side-width:${sideWidth}%;--primary-preferred-px:${primaryPreferred}px;--side-preferred-px:${sidePreferred}px;--panel-gap:${page.panelGap}px;--stack-gap:${page.stackGap}px">${layoutPanels()}</div>`;
+        const board = overviewMode ? renderOverviewBoard(groups, page, panels.guide) : mosaic;
+        const cards = `<div class="library-page-grid" data-page-grid style="--page-space-left:${page.spaceLeft}%;--page-space-right:${page.spaceRight}%;--page-space-top:${page.spaceTop}px;--page-space-bottom:${page.spaceBottom}px">${board}</div>`;
         const toggle = `<button class="btn ${focusLayoutEditing ? 'primary' : 'ghost'}" data-toggle-focus-layout>${focusLayoutEditing ? '✓ Done customizing' : '▦ Customize page'}</button>`;
         const guideToggle = `<label class="page-guide-toggle"><input type="checkbox" data-guide-visible ${page.guideVisible ? 'checked' : ''}> Weapon of Destiny</label>`;
         const patterns = [['split-right', 'Main left · right stack'], ['split-left', 'Main right · left stack'], ['focus-top', 'Main top · two below'], ['focus-bottom', 'Main bottom · two above'], ['columns', 'Three columns'], ['stacked', 'Vertical stack']];
-        const extras = focusLayoutEditing ? `<button class="btn smallbtn ghost" data-reset-focus-layout>↺ Reset layout</button><label class="page-layout-mode-label">Arrangement <select data-page-pattern>${patterns.map(([id, label]) => `<option value="${id}" ${page.pattern === id ? 'selected' : ''}>${label}</option>`).join('')}</select></label>` : '';
+        const extras = focusLayoutEditing ? (overviewMode ? `<button class="btn smallbtn ghost" data-reset-overview-layout>↺ Reset card positions</button>` : `<button class="btn smallbtn ghost" data-reset-focus-layout>↺ Reset layout</button><label class="page-layout-mode-label">Arrangement <select data-page-pattern>${patterns.map(([id, label]) => `<option value="${id}" ${page.pattern === id ? 'selected' : ''}>${label}</option>`).join('')}</select></label>`) : '';
         const spaceLabels = [['spaceLeft', 'Left', 35, '%'], ['spaceRight', 'Right', 35, '%'], ['spaceTop', 'Top', 320, 'px'], ['spaceBottom', 'Bottom', 320, 'px']];
-        const spacing = focusLayoutEditing ? `<div class="page-space-toolbar" data-layout-ui><strong>Blank space</strong>${spaceLabels.map(([id, label, max, unit]) => `<label>${label} <input type="range" min="0" max="${max}" step="1" value="${page[id]}" data-page-space="${id}" aria-label="Blank space on ${label.toLowerCase()} of page"><output>${page[id]}${unit}</output></label>`).join('')}<strong>Panel gaps</strong>${[['panelGap', 'Side-by-side'], ['stackGap', 'Stack']].map(([id, label]) => `<label>${label} <input type="range" min="0" max="32" step="1" value="${page[id]}" data-panel-gap="${id}" aria-label="${label} panel gap"><output>${page[id]}px</output></label>`).join('')}</div>` : '';
-        return `<div class="hub-title"><div><span class="overline">PERSONAL ARAM MAYHEM BUILDS</span><h1>My Saved Builds</h1></div><div class="row library-header-actions"><button class="btn primary" data-new-build>+ New build</button><button class="btn ghost" data-import-share>Import Build</button>${toggle}${guideToggle}${extras}</div></div>${spacing}<p class="muted">${focusLayoutEditing ? 'Drag a dotted handle to another panel edge to snap it. Resize sides or bottoms; set the Stack gap to 0px to make panels touch.' : focused ? 'Select an augment combo to show its core items. Quick edit changes save automatically.' : 'Choose a champion to expand it, then switch between its saved builds. Your layout is preserved.'}</p>${groups.length || focusLayoutEditing ? cards : `<div class="empty"><h2>No builds yet</h2><p>Choose a champion from the directory to create your first build.</p><button class="btn primary" data-go-view="home">Browse champions</button></div>`}`;
+        const spacing = focusLayoutEditing ? `<div class="page-space-toolbar" data-layout-ui><strong>Blank space</strong>${spaceLabels.map(([id, label, max, unit]) => `<label>${label} <input type="range" min="0" max="${max}" step="1" value="${page[id]}" data-page-space="${id}" aria-label="Blank space on ${label.toLowerCase()} of page"><output>${page[id]}${unit}</output></label>`).join('')}${overviewMode ? '' : `<strong>Panel gaps</strong>${[['panelGap', 'Side-by-side'], ['stackGap', 'Stack']].map(([id, label]) => `<label>${label} <input type="range" min="0" max="32" step="1" value="${page[id]}" data-panel-gap="${id}" aria-label="${label} panel gap"><output>${page[id]}px</output></label>`).join('')}`}</div>` : '';
+        return `<div class="hub-title"><div><span class="overline">PERSONAL ARAM MAYHEM BUILDS</span><h1>My Saved Builds</h1></div><div class="row library-header-actions"><button class="btn primary" data-new-build>+ New build</button><button class="btn ghost" data-import-share>Import Build</button>${toggle}${guideToggle}${extras}</div></div>${spacing}<p class="muted">${focusLayoutEditing ? (overviewMode ? 'Drag any champion card or Weapon of Destiny using its dotted handle. Drag the gold edge handle to resize; positions save automatically.' : 'Drag a dotted handle to another panel edge to snap it. Resize sides or bottoms; set the Stack gap to 0px to make panels touch.') : focused ? 'Select an augment combo to show its core items. Quick edit changes save automatically.' : 'Choose a champion to expand it, then switch between its saved builds. Your layout is preserved.'}</p>${groups.length || focusLayoutEditing ? cards : `<div class="empty"><h2>No builds yet</h2><p>Choose a champion from the directory to create your first build.</p><button class="btn primary" data-go-view="home">Browse champions</button></div>`}`;
     }
     function renderChampionView() {
         const c = resolvedChampion(state.championFocus);
@@ -1317,6 +1603,15 @@
                 libraryQuickEdit = false;
             render();
         });
+        root.querySelector('[data-reset-overview-layout]')?.addEventListener('click', e => {
+            e.preventDefault();
+            e.stopPropagation();
+            changeFocusLayout(layout => {
+                layout.page.overviewPositions = {};
+                layout.page.overviewLayoutWidth = 0;
+            });
+        });
+        bindOverviewBoard(root);
         root.querySelector('[data-reset-focus-layout]')?.addEventListener('click', e => {
             e.stopPropagation();
             if (!confirm('Reset the entire My Builds page layout? Your saved builds will not change.'))
@@ -1663,7 +1958,7 @@
             grip.addEventListener('pointerdown', e => {
                 if (e.pointerType === 'mouse' && e.button !== 0)
                     return;
-                if (!vertical && window.innerWidth <= 940)
+                if (!vertical && window.innerWidth <= 800)
                     return;
                 e.preventDefault();
                 e.stopPropagation();
@@ -1675,6 +1970,7 @@
                 const leftEdge = split && layout.pattern === 'split-left' && slot === 'primary';
                 const mosaicRect = mosaic.getBoundingClientRect();
                 const mainKey = layout.slots[0], mainWidth = layout.widths[mainKey];
+                const referenceWidth = layout.focusReferenceWidth || Math.max(1440, mosaicRect.width);
                 const baseWidth = layout.widths[key], baseHeight = panel.getBoundingClientRect().height;
                 const min = PAGE_MIN[key];
                 const gapPct = layout.panelGap / Math.max(1, mosaicRect.width) * 100;
@@ -1688,20 +1984,24 @@
                         panel.classList.add('has-custom-height');
                     }
                     else {
-                        const d = Math.round((ev.clientX - e.clientX) / Math.max(1, mosaicRect.width) * 100) * (leftEdge ? -1 : 1);
+                        const d = Math.round((ev.clientX - e.clientX) / Math.max(1, split ? referenceWidth : mosaicRect.width) * 100) * (leftEdge ? -1 : 1);
                         next = Math.round(Math.max(min, Math.min(Math.max(min, maxWidth), baseWidth + d)));
                         if (split) {
                             const sideStack = mosaic.querySelector('.page-side-stack');
                             if (slot === 'primary') {
                                 mosaic.style.setProperty('--primary-width', next + '%');
+                                mosaic.style.setProperty('--primary-preferred-px', (referenceWidth * next / 100) + 'px');
                                 const mainTrack = mosaic.querySelector('.page-main-track');
                                 if (mainTrack)
                                     mainTrack.style.setProperty('--primary-width', next + '%');
                             }
                             else {
                                 const maxSide = Math.max(next, ...layout.slots.slice(1).filter(k => k !== key).map(k => layout.widths[k]));
-                                if (sideStack)
-                                    sideStack.style.setProperty('--side-width', Math.min(maxSide, 100 - mainWidth - gapPct) + '%');
+                                if (sideStack) {
+                                    sideStack.style.setProperty('--side-width', maxSide + '%');
+                                    sideStack.style.setProperty('--side-preferred-px', (referenceWidth * maxSide / 100) + 'px');
+                                    mosaic.style.setProperty('--side-preferred-px', (referenceWidth * maxSide / 100) + 'px');
+                                }
                                 if (sideStack)
                                     sideStack.querySelectorAll('[data-page-panel]').forEach(p => {
                                         const w = p === panel ? next : layout.widths[p.dataset.pagePanel];
@@ -1726,8 +2026,11 @@
                     changeFocusLayout(l => {
                         if (vertical)
                             l.page.heights[key] = next;
-                        else
+                        else {
                             l.page.widths[key] = next;
+                            if (split)
+                                l.page.focusReferenceWidth = referenceWidth;
+                        }
                     });
                 };
                 grip.setPointerCapture(e.pointerId);
@@ -1845,7 +2148,7 @@
         document.body.classList.toggle('editor-mode', state.view === 'builds');
         document.body.classList.toggle('library-page-mode', state.view === 'library');
         renderSidebar();
-        document.getElementById('patchTag').textContent = 'Patch ' + state.patch;
+        document.getElementById('patchTag').textContent = 'Patch ' + currentGamePatch() + (patchValue(state.patch) < patchValue(currentGamePatch()) ? ' · stats ' + state.patch : '');
         document.querySelectorAll('[data-view]').forEach(x => x.classList.toggle('active', x.dataset.view === state.view || (state.view === 'champion' && x.dataset.view === 'home') || (state.view === 'builds' && x.dataset.view === 'library')));
         document.getElementById('dataStatus').textContent = state.status;
         const spacingButton = document.getElementById('siteSpacingToggle');
@@ -2978,14 +3281,17 @@
             const raw = await r.json();
             if (!Array.isArray(raw.rows) || raw.rows.length < 100)
                 throw Error('Unexpected augment format');
-            state.augments = raw.rows.map(x => ({
+            state.augments = mergeNewReleaseAugments(raw.rows.map(x => ({
                 id: String(x.augmentId), legacyId: String(x.augmentId), name: String(x.name?.en || x.slug || x.augmentId), rarity: x.rarity || 'silver', description: '', introducedPatch: x.introducedPatch || '', retiredPatch: x.retiredPatch || null, pickRate: x.pickRate, source: 'public', url: x.url, pickRateRank: x.pickRateRank, previousPickRateRank: x.previousPickRateRank, pickRateChange: x.pickRateChange, previousPickRate: x.previousPickRate
-            }));
+            })));
             state.patch = raw.meta?.patch || raw.rows?.[0]?.patch || state.patch;
             reconcileAugmentIds();
             if (state.itemSource.startsWith('ARAMMayhem.com'))
                 state.itemSource = `ARAMMayhem.com current item catalog · patch ${state.patch}`;
-            state.status = `${state.augments.length} augments loaded · patch ${state.patch} · source: arammayhem.com`;
+            const pending = state.augments.filter(a => a.source === 'new-release').length;
+            state.status = pending
+                ? `${state.augments.length} augments available · stats patch ${state.patch} + ${pending} new from patch 26.23 · source: arammayhem.com`
+                : `${state.augments.length} augments loaded · stats patch ${state.patch} · source: arammayhem.com`;
             toast('Augment data refreshed');
             render();
         }
@@ -3044,6 +3350,10 @@
             alias.set(slug(a.name), a.id);
             if (a.legacyId)
                 alias.set(a.legacyId, a.id);
+        }
+        for (const provisional of RELEASED_AUGMENTS) {
+            const current = state.augments.find(a => slug(a.name) === slug(provisional.name));
+            if (current) alias.set(provisional.id, current.id);
         }
         for (const b of state.builds) {
             if (!b.augments)
@@ -3156,11 +3466,12 @@
         try {
             const obj = JSON.parse(await f.text());
             if (Array.isArray(obj.rows)) {
-                state.augments = obj.rows.map(x => ({
+                state.augments = mergeNewReleaseAugments(obj.rows.map(x => ({
                     id: String(x.augmentId), name: String(x.name?.en || x.slug), rarity: x.rarity || 'silver', introducedPatch: x.introducedPatch || '', retiredPatch: x.retiredPatch || null, pickRate: x.pickRate, pickRateRank: x.pickRateRank, pickRateChange: x.pickRateChange, previousPickRateRank: x.previousPickRateRank, url: x.url, source: 'import'
-                }));
+                })));
                 state.patch = obj.meta?.patch || state.patch;
-                state.status = `Imported ${state.augments.length} augment entries · patch ${state.patch}`;
+                const pending = state.augments.filter(a => a.source === 'new-release').length;
+                state.status = `Imported ${state.augments.length} augments · stats ${state.patch}${pending ? ` + ${pending} new from 26.23` : ''}`;
                 render();
                 toast('Augment database imported');
             }

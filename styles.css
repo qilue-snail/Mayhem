@@ -3180,12 +3180,14 @@ body.library-page-mode.index-mode .main {
   flex-direction: row;
   flex-wrap: nowrap;
 }
+/* Use saved desktop-sized track widths. Shrink ONLY once both tracks need
+   more than the available container width; no early wrapping with empty space. */
 .page-mosaic.mode-split-right>.page-main-track,.page-mosaic.mode-split-left>.page-main-track {
-  flex: 0 0 var(--primary-width,60%);
+  flex: 0 1 var(--primary-preferred-px,720px);
   min-width: 0;
 }
 .page-mosaic.mode-split-right>.page-side-stack,.page-mosaic.mode-split-left>.page-side-stack {
-  flex: 0 0 var(--side-width,21%);
+  flex: 0 1 var(--side-preferred-px,300px);
   min-width: 0;
 }
 .page-side-stack {
@@ -3518,7 +3520,7 @@ body.library-page-mode.index-mode .main {
 .focus-layout-section,.focus-combo-col {
   min-height: var(--custom-min-height,0px);
 }
-@media (max-width:940px) {
+@media (max-width:800px) {
   body.library-page-mode.index-mode .layout {
     max-width: none;
   }
@@ -4556,4 +4558,88 @@ body.library-page-mode.index-mode .main {
 .focus-header-actions .focus-share-mini.share-build-btn {
   height: 28px;
   min-height: 28px;
+}
+
+/* My Builds overview: full-width, individually movable champion cards and guide.
+   Coordinates are saved with layout preferences, separately from build data. */
+.overview-free-board {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  min-height: 290px;
+}
+.overview-free-tile {
+  position: absolute;
+  left: clamp(0px,var(--overview-x,0%),calc(100% - var(--overview-w,232px)));
+  top: var(--overview-y,0px);
+  width: var(--overview-w,232px);
+  max-width: 100%;
+  box-sizing: border-box;
+  z-index: 1;
+}
+.overview-free-tile .library-summary-card {
+  width: 100%;
+  min-height: 91px;
+  margin: 0;
+}
+.overview-guide-tile .page-panel-guide {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  background: #102b3a;
+  border: 1px solid #3b5d70;
+  border-radius: 9px;
+}
+.overview-guide-tile .legendary-table { font-size: 10px; }
+.overview-guide-tile .legendary-table th,
+.overview-guide-tile .legendary-table td { overflow-wrap: anywhere; }
+.overview-free-tile.is-customizing { outline: 1px dashed #d0ae72; outline-offset: 2px; }
+.overview-free-tile.overview-moving { z-index: 20; outline: 2px solid #edc778; }
+.overview-tile-grip {
+  position: absolute;
+  top: -11px;
+  left: -10px;
+  display: grid;
+  place-items: center;
+  width: 25px; height: 25px;
+  background: #214456;
+  border: 1px solid #e9bd6b;
+  border-radius: 7px;
+  color: #ffdc91;
+  font-size: 18px;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  z-index: 4;
+  box-shadow: 0 1px 5px #081621;
+}
+.overview-tile-grip:active { cursor: grabbing; }
+.overview-tile-resizer {
+  position: absolute;
+  top: 50%;
+  right: -6px;
+  transform: translateY(-50%);
+  width: 12px; height: 42px;
+  border: 2px solid #0c2636;
+  border-radius: 7px;
+  background: #e8bd72;
+  cursor: ew-resize;
+  touch-action: none;
+  z-index: 4;
+}
+@media(max-width:680px) {
+  .overview-free-board {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(min(100%,210px),1fr));
+    gap: 10px;
+    min-height: 0 !important;
+  }
+  .overview-free-tile {
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    left: auto !important; top: auto !important;
+  }
+  .overview-guide-tile { grid-column: auto; }
+  .overview-tile-grip,.overview-tile-resizer { display:none; }
 }
