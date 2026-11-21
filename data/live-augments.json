@@ -1,12 +1,1955 @@
 {
-  "schemaVersion": 1,
-  "source": "Seed entries; GitHub Actions replaces this file with the full current KIWI roster",
-  "patch": "26.23",
+  "schemaVersion": 2,
+  "source": "Riot KIWI augment pool via CommunityDragon",
+  "sourceUrls": [
+    "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/augment-lists.json",
+    "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/cherry-augments.json"
+  ],
   "augments": [
-    {"id":"fortified","name":"Fortified","rarity":"silver","introducedPatch":"26.23","description":"Gain 20 Armor, then increase your bonus Armor by 25%."},
-    {"id":"mystic-guard","name":"Mystic Guard","rarity":"silver","introducedPatch":"26.23","description":"Gain 20 Magic Resist, then increase your bonus Magic Resist by 25%."},
-    {"id":"slime-time","name":"Slime Time","rarity":"silver","introducedPatch":"26.23","description":"Every few seconds, Autocast a burst of slime from your body, dealing magic damage to nearby enemies. If you hit a champion, secrete a blob that heals you when walked over."},
-    {"id":"steadfaster-presence","name":"Steadfaster Presence","rarity":"gold","introducedPatch":"26.23","description":"Gain bonus Armor, Magic Resist, and Tenacity. This bonus increases below 40% maximum Health."},
-    {"id":"tooth-fairy","name":"Tooth Fairy","rarity":"gold","introducedPatch":"26.12","availableFromPatch":"26.23","description":"Bursting enemies drops Teeth. Picking up Teeth grants permanent Lethality and Magic Penetration."}
-  ]
+    {
+      "id": "adapt",
+      "name": "ADAPt",
+      "rarity": "silver",
+      "description": "Convert Bonus Attack Damage to Ability Power. Gain …% Ability Power.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/adapt_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "adaptive-ward",
+      "name": "Adaptive Ward",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/genericabilityaugmenticon_silver.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "all-for-you",
+      "name": "All For You",
+      "rarity": "gold",
+      "description": "Your Heals and Shields are stronger when used on an ally.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/allforyou_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "apex-inventor",
+      "name": "Apex Inventor",
+      "rarity": "gold",
+      "description": "Gain … Item Haste (equivalent to …% Item CDR). Item Haste reduces the cooldown %i:cooldown% of all Item Abilities.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/apexinventor_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "arcane-axiom",
+      "name": "Arcane Axiom",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/arcaneaxiom_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "archmage",
+      "name": "Archmage",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/eureka_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "armored-impact",
+      "name": "Armored Impact",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/armoredimpact_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "back-to-basics",
+      "name": "Back To Basics",
+      "rarity": "prismatic",
+      "description": "Gain increased Ability Damage, Healing, Shielding, and Ability Haste, but you cannot use your Ultimate Ability.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/backtobasics_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "bees",
+      "name": "BEES!!!",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/bees_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "big-brain",
+      "name": "Big Brain",
+      "rarity": "gold",
+      "description": "At the start of each round, gain … Shield for every %i:scaleAP% … Ability Power.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/bigbrain_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "big-shot",
+      "name": "Big Shot",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/bigshot_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "biggest-snowball-ever",
+      "name": "Biggest Snowball Ever",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/biggestsnowballever_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "blade-waltz",
+      "name": "Blade Waltz",
+      "rarity": "prismatic",
+      "description": "Gain the Blade Waltz Summoner Spell. Blade Waltz makes you untargetable while you dash at and damage enemies … times.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/bladewaltz_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "blue-barrier",
+      "name": "Blue Barrier",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/bluenote_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "blunt-force",
+      "name": "Blunt Force",
+      "rarity": "silver",
+      "description": "Gain %i:scaleAD% …% Attack Damage.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/bluntforce_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "bolstered",
+      "name": "Bolstered",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/genericabilityaugmenticon_silver.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "bonk",
+      "name": "BONK!",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/bonk_large.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "bouncing-bees",
+      "name": "Bouncing Bees",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/kingme_large.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "brass-blast",
+      "name": "Brass Blast",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/camo_large.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "bread-and-butter",
+      "name": "Bread And Butter",
+      "rarity": "gold",
+      "description": "Your … gains … Ability Haste.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/genericabilityaugmenticon_gold.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "bread-and-cheese",
+      "name": "Bread and Cheese",
+      "rarity": "gold",
+      "description": "Your … gains … Ability Haste.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/genericabilityaugmenticon_gold.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "bread-and-jam",
+      "name": "Bread And Jam",
+      "rarity": "gold",
+      "description": "Your … gains … Ability Haste.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/genericabilityaugmenticon_gold.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "can-t-touch-this",
+      "name": "Can't Touch This",
+      "rarity": "prismatic",
+      "description": "Casting your Ultimate makes you Invulnerable for a short duration.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/canttouchthis_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "celestial-body",
+      "name": "Celestial Body",
+      "rarity": "gold",
+      "description": "Gain … Health, but you deal …% less damage.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/celestialbody_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "chain-reaction",
+      "name": "Chain Reaction",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/genericabilityaugmenticon_gold.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "circle-of-death",
+      "name": "Circle of Death",
+      "rarity": "prismatic",
+      "description": "Healing and Health Regen you do deals a portion of the value as magic damage to the nearest enemy champion.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/circleofdeath_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "clown-college",
+      "name": "Clown College",
+      "rarity": "prismatic",
+      "description": "Gain Deceive Summoner Spell. Deceive: You teleport and become Invisible. Your next Attack while Invisible deals an additional physical damage. When you die, spawn an exploding box that deals a large amount of magic damage and Fear nearby enemies.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/clowncollege_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "courage-of-the-colossus",
+      "name": "Courage of the Colossus",
+      "rarity": "prismatic",
+      "description": "Gain … Shield after Immobilizing or Grounding an enemy champion.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/courageofthecolossus_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "crimson-cobalt",
+      "name": "CRIMSON COBALT",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/genericabilityaugmenticon_gold.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "critical-healing",
+      "name": "Critical Healing",
+      "rarity": "gold",
+      "description": "Your Heals and Shields can Critically Strike for an addtional …. Gain %i:scaleCrit% …% Crit Chance.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/criticalhealing_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "critical-rhythm",
+      "name": "Critical Rhythm",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/criticalrhythm_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "cruelty",
+      "name": "Cruelty",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/cruelty_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "dashing",
+      "name": "Dashing",
+      "rarity": "prismatic",
+      "description": "Your dash, leap, blink, or teleport Abilities gain … Ability Haste.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/dashing_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "dawnbringer-s-resolve",
+      "name": "Dawnbringer's Resolve",
+      "rarity": "gold",
+      "description": "Upon dropping below …% Health, heal for … over … seconds.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/dawnbringersresolve_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "deft",
+      "name": "Deft",
+      "rarity": "silver",
+      "description": "Gain %i:scaleAS% …% Attack Speed.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/deft_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "dive-bomber",
+      "name": "Dive Bomber",
+      "rarity": "silver",
+      "description": "Your team's first death each round explodes, dealing massive damage true damage.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/divebomber_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "divine-intervention",
+      "name": "Divine Intervention",
+      "rarity": "gold",
+      "description": "Shortly after combat starts, call a protective star. Upon its landing, you and nearby allies become Invulnerable for a few seconds. Then Autocast this every … seconds.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/slowactingpainkillers_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "don-t-blink",
+      "name": "Don't Blink",
+      "rarity": "silver",
+      "description": "Gain …% bonus damage per 10 Move Speed you have more than the target.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/dontblink_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "don-t-change-the-channel",
+      "name": "Don't Change the Channel",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/dontchangethechannel_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "donation",
+      "name": "Donation",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/donation_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "doom",
+      "name": "DOOM",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/pentakill_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "double-tap",
+      "name": "Double Tap",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/dualwield_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "double-time",
+      "name": "Double Time",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/aram_phenomenalevil_large.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "draw-your-sword",
+      "name": "Draw Your Sword",
+      "rarity": "prismatic",
+      "description": "You are now melee. Gain Attack Damage, Health, Attack Speed, Lifesteal, and Move Speed based on how much Attack Range you lost.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/drawyoursword_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "dual-wield",
+      "name": "Dual Wield",
+      "rarity": "prismatic",
+      "description": "When you Attack, fire a bolt that deals …% damage and applies your {{ Item_Keyword_OnHit }} effects at …% effectiveness. Gain …% total Attack Speed.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/dualwield_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "earthwake",
+      "name": "Earthwake",
+      "rarity": "prismatic",
+      "description": "Your dash, blink, or teleport Abilities leave behind a trail that detonates after 1 second.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/earthwake_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "echo-cast",
+      "name": "Echo Cast",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/genericabilityaugmenticon_prismatic.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "empowered-by-the-faithful",
+      "name": "Empowered By The Faithful",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/empoweredbythefaithful_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "empyrean-promise",
+      "name": "Empyrean Promise",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/empyreampromise_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "en-passant",
+      "name": "En Passant",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/dashing_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "enchanting-butterflies",
+      "name": "Enchanting Butterflies",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/enchantedbuttery_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "endless-decimation",
+      "name": "Endless Decimation",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/endlessdecimate_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "erosion",
+      "name": "Erosion",
+      "rarity": "silver",
+      "description": "Damaging enemies adds a stacking Armor and Magic Resist shred for …s.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/erosion_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "escapade",
+      "name": "escAPADe",
+      "rarity": "silver",
+      "description": "Convert Ability Power to Bonus Attack Damage. Gain …% Attack Damage.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/escapade_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "escape-plan",
+      "name": "Escape Plan",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/escapeplan_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "ethereal-weapon",
+      "name": "Ethereal Weapon",
+      "rarity": "gold",
+      "description": "Your Abilities apply {{ Item_Keyword_OnHit }} effects.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/etherealweapon_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "eureka",
+      "name": "Eureka",
+      "rarity": "prismatic",
+      "description": "Gain Ability Haste equal to …% Ability Power.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/eureka_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "fey-magic",
+      "name": "Fey Magic",
+      "rarity": "prismatic",
+      "description": "Damaging with your Ultimate Polymorphs enemies for a few seconds.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/feymagic_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "final-form",
+      "name": "Final Form",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/finalform_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "firebrand",
+      "name": "Firebrand",
+      "rarity": "gold",
+      "description": "Your Attacks apply an infinitely stacking Burn {{ Item_Keyword_OnHit }}, dealing damage over time.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/firebrand_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "firefox",
+      "name": "FireFox",
+      "rarity": "silver",
+      "description": "Autocast Gain Movement Speed and conjure three flames that orbit you, targetting the closest visible enemy in range and dealing magic damage.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/firfox_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "first-aid-kit",
+      "name": "First-Aid Kit",
+      "rarity": "silver",
+      "description": "Gain …% Heal and Shield Power.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/firstaidkit_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "flash-2",
+      "name": "Flash 2",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/flash2_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "flashbang",
+      "name": "Flashbang",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/flashbang_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "flashy",
+      "name": "Flashy",
+      "rarity": "gold",
+      "description": "Your Flash has … Ammo and a … second Cooldown.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/flashy_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "flow-of-spirit",
+      "name": "Flow of Spirit",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/genericabilityaugmenticon_gold.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "forged-by-the-master",
+      "name": "Forged By The Master",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/forgedbythemaster_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "fortified",
+      "name": "Fortified",
+      "rarity": "silver",
+      "description": "Gain 20 Armor, then increase your bonus Armor by 25%.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/fortified_small.png",
+      "source": "CommunityDragon KIWI",
+      "introducedPatch": "26.23"
+    },
+    {
+      "id": "from-beginning-to-end",
+      "name": "From Beginning To End",
+      "rarity": "gold",
+      "description": "Gain the First Strike and Dark Harvest Keystone Runes.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/frombeginningtoend_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "from-downtown",
+      "name": "From Downtown",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/questbangbang_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "fruitify",
+      "name": "Fruitify",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/fruitseason_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "get-excited",
+      "name": "Get Excited!",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/getexcited_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "get-jinxed",
+      "name": "Get Jinxed",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/overextender_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "giant-slayer",
+      "name": "Giant Slayer",
+      "rarity": "prismatic",
+      "description": "Become tiny, gain Move Speed, and bonus damage to champions based on how much larger they are than you.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/giantslayer_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "gift-of-the-drowned",
+      "name": "Gift of the Drowned",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/giftofthedrowned_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "glass-cannon",
+      "name": "Glass Cannon",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/glasscannon_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "goldrend",
+      "name": "Goldrend",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/goldrend_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "goliath",
+      "name": "Goliath",
+      "rarity": "prismatic",
+      "description": "Become large, gaining …% Health and …% Adaptive Force.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/goliath_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "goredrink",
+      "name": "Goredrink",
+      "rarity": "silver",
+      "description": "Gain …% Omnivamp.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/goredrink_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "group-hug",
+      "name": "Group Hug",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/empyreampromise_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "growth-spurt",
+      "name": "Growth Spurt",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/growthspurt_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "hand-of-baron",
+      "name": "Hand of Baron",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/handofbaron_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "hands-off-the-talent",
+      "name": "Hands off the Talent",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/bonk_large.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "heavy",
+      "name": "HEAVY",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/pentakill_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "heavy-hitter",
+      "name": "Heavy Hitter",
+      "rarity": "silver",
+      "description": "Your Attacks deal additional physical damage equal to …% of your max Health.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/heavyhitter_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "heavy-is-the-crown",
+      "name": "Heavy Is The Crown",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/heavyisthecrown_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "hellbent",
+      "name": "Hellbent",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/hellbent_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "hextech-soul",
+      "name": "Hextech Soul",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/infernalsoul_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "holy-snowball",
+      "name": "Holy Snowball",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/goldensnowball_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "homeguard",
+      "name": "Homeguard",
+      "rarity": "silver",
+      "description": "Gain …% Move Speed, disabled for … seconds after taking damage.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/homeguard_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "icathia-s-fall",
+      "name": "Icathia's Fall",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/quest_voidimmolation_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "ice-cold",
+      "name": "Ice Cold",
+      "rarity": "silver",
+      "description": "Your Slowing effects reduce Move Speed by an extra ….",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/icecold_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "impassable",
+      "name": "Impassable",
+      "rarity": "gold",
+      "description": "Gain the Aftershock and Glacial Augment Keystone Runes.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/impassable_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "infernal-conduit",
+      "name": "Infernal Conduit",
+      "rarity": "prismatic",
+      "description": "Your Abilities apply an infinitely stacking Burn, dealing magic damage over time. Your Burn effects reduce your basic Ability Cooldowns.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/infernalconduit_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "infernal-soul",
+      "name": "Infernal Soul",
+      "rarity": "silver",
+      "description": "You gain the Infernal Dragon Soul, dealing bonus damage when you hit enemies with Abilities or Attacks.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/infernalsoul_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "infinite-recursion",
+      "name": "Infinite Recursion",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/infiniterecursion_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "it-s-critical",
+      "name": "It's Critical",
+      "rarity": "gold",
+      "description": "Gain %i:scaleCrit% …% Crit chance.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/itscritical_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "it-s-go-time",
+      "name": "It's Go Time",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/genericabilityaugmenticon_silver.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "it-s-killing-time",
+      "name": "It's Killing Time",
+      "rarity": "gold",
+      "description": "After casting your Ultimate, mark all enemy champions for death. While marked, store damage dealt to them, and detonate the damage when the mark ends.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/itskillingtime_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "jeweled-bracelet",
+      "name": "Jeweled Bracelet",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/genericabilityaugmenticon_gold.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "jeweled-gauntlet",
+      "name": "Jeweled Gauntlet",
+      "rarity": "prismatic",
+      "description": "Your Abilities can Critically Strike. Gain %i:scaleCrit% … Crit Chance.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/jeweledgauntlet_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "juiced",
+      "name": "Juiced",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/juiced_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "kill-secured",
+      "name": "Kill Secured",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/killsecure_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "king-me",
+      "name": "King Me",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/kingme_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "leg-day",
+      "name": "Leg Day",
+      "rarity": "silver",
+      "description": "Gain … Movement Speed and …% Slow Resist.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/legday_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "lich-brain",
+      "name": "Lich Brain",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/lichbrain_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "light-em-up",
+      "name": "Light 'Em Up!",
+      "rarity": "silver",
+      "description": "Every 4th Attack deals additional magic damage {{ Item_Keyword_OnHit }}.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/lightemup_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "lil-extra-help",
+      "name": "Lil' Extra Help",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/genericabilityaugmenticon_gold.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "lonely-warrior",
+      "name": "Lonely Warrior",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/adamant_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "mad-scientist",
+      "name": "Mad Scientist",
+      "rarity": "prismatic",
+      "description": "Each Round you'll either grow large (Adaptive Force and Health) or tiny (Ability Haste and Move Speed).",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/madscientist_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "magic-missile",
+      "name": "Magic Missile",
+      "rarity": "gold",
+      "description": "Dealing damage with an Ability fires … magic missiles, each dealing percent max Health true damage.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/particles/kiwi/magicmissile_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "marksmage",
+      "name": "Marksmage",
+      "rarity": "gold",
+      "description": "Your Attacks deal additional physical damage equal to …% Ability Power.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/marksmage_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "master-of-duality",
+      "name": "Master of Duality",
+      "rarity": "prismatic",
+      "description": "Your Attacks grant you Ability Power {{ Item_Keyword_OnHit }} and your Abilities grant you Attack Damage, until the end of the round.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/masterofduality_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "mercy-s-strike",
+      "name": "Mercy's Strike",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/genericabilityaugmenticon_gold.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "mighty-shield",
+      "name": "Mighty Shield",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/mightyshield_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "mind-to-matter",
+      "name": "Mind to Matter",
+      "rarity": "silver",
+      "description": "Increase max Health by half of your Mana.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/mindtomatter_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "minionmancer",
+      "name": "Minionmancer",
+      "rarity": "gold",
+      "description": "Your summons gain …% increased size, health, and damage.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/minionmancer_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "mosh-monster",
+      "name": "Mosh Monster",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/genericabilityaugmenticon_prismatic.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "mountain-soul",
+      "name": "Mountain Soul",
+      "rarity": "silver",
+      "description": "You gain the Mountain Soul, gaining a Shield after being out of combat for a short time.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/mountainsoul_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "multishot",
+      "name": "Multishot",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/genericabilityaugmenticon_prismatic.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "mystic-guard",
+      "name": "Mystic Guard",
+      "rarity": "silver",
+      "description": "Gain 20 Magic Resist, then increase your bonus Magic Resist by 25%.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/mysticguard_small.png",
+      "source": "CommunityDragon KIWI",
+      "introducedPatch": "26.23"
+    },
+    {
+      "id": "mystic-punch",
+      "name": "Mystic Punch",
+      "rarity": "prismatic",
+      "description": "{{ Item_Keyword_OnHit }} reduce the cooldown of your abilities by … seconds %i:scaleCooldown%.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/mysticpunch_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "nature-is-healing",
+      "name": "Nature is Healing",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/natureishealing_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "nightstalking",
+      "name": "Nightstalking",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/nightstalking_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "no-mana-no-problem",
+      "name": "No Mana, No Problem",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/nomananoproblem_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "ocean-soul",
+      "name": "Ocean Soul",
+      "rarity": "silver",
+      "description": "Gain the Ocean Soul, granting high Health and Mana regen after damaging enemies.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/oceansoul_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "ok-boomerang",
+      "name": "Ok Boomerang",
+      "rarity": "gold",
+      "description": "Autocast throw a boomerang at a nearby enemy every …s.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/okboomerang_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "ominous-pact",
+      "name": "Ominous Pact",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/wisdomofages_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "omni-soul",
+      "name": "Omni Soul",
+      "rarity": "prismatic",
+      "description": "Gain … random Dragon Souls.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/omnisoul_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "one-hit-wonder",
+      "name": "One Hit Wonder",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/genericabilityaugmenticon_gold.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "outlaw-s-grit",
+      "name": "Outlaw's Grit",
+      "rarity": "gold",
+      "description": "After using a Dash, Blink, or Teleport Ability you gain Armor and Magic Resist.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/outlawsgrit_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "overextender",
+      "name": "Overextender",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/overextender_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "overflow",
+      "name": "Overflow",
+      "rarity": "gold",
+      "description": "Your Mana costs are doubled. Your Ability Heals, Shields, and damage are increased based on your max Mana.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/overflow_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "overloaded",
+      "name": "Overloaded",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/genericabilityaugmenticon_prismatic.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "pandora-s-box",
+      "name": "Pandora's Box",
+      "rarity": "prismatic",
+      "description": "Transmute all of your augments into random Prismatic%i:Augment% Augments.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/pandoras_box_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "phenomenal-evil",
+      "name": "Phenomenal Evil",
+      "rarity": "gold",
+      "description": "Permanently gain … Ability Power when you hit an enemy with an Ability. If taken after round …, gain … Ability Power.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/aram_phenomenalevil_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "pin-cushion",
+      "name": "Pin Cushion",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/symphonyofwar_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "pinball",
+      "name": "Pinball",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/pinballsnowball_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "poltergeist",
+      "name": "Poltergeist",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/poltergeist_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "porcupine",
+      "name": "Porcupine",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/pincushion_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "power",
+      "name": "POWER",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/pentakill_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "pressure-cooker",
+      "name": "Pressure Cooker",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/questpressurecooker_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "prom-queen",
+      "name": "Prom Queen",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/promqueen_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "protein-shake",
+      "name": "Protein Shake",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/proteinshake_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "purist-caster",
+      "name": "Purist - Caster",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/puristcaster_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "pursuit-of-haste",
+      "name": "Pursuit of Haste",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/genericabilityaugmenticon_gold.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "pursuit-of-power",
+      "name": "Pursuit of Power",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/marksmage_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "quickstep",
+      "name": "Quickstep",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/genericabilityaugmenticon_gold.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "ravenous-bind",
+      "name": "Ravenous Bind",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/upgradehubris_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "recoil",
+      "name": "Recoil",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/genericabilityaugmenticon_gold.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "recursion",
+      "name": "Recursion",
+      "rarity": "gold",
+      "description": "Gain … Ability Haste.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/recursion_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "rejuvenation",
+      "name": "Rejuvenation",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/rabblerousing_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "reload",
+      "name": "Reload",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/lightningstrikes_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "rise",
+      "name": "RISE",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/zerohour_large.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "rite-of-ascension",
+      "name": "Rite of Ascension",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/glasscannon_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "salvation",
+      "name": "Salvation",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/salvation_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "sap-magic",
+      "name": "Sap Magic",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/mercysstrike_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "scoped-weapons",
+      "name": "Scoped Weapons",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/scopedweapons_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "scopier-weapons",
+      "name": "Scopier Weapons",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/scopierweapons_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "scopiest-weapons",
+      "name": "Scopiest Weapons",
+      "rarity": "prismatic",
+      "description": "Gain … Attack Range.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/scopiestweapons_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "searing-dawn",
+      "name": "Searing Dawn",
+      "rarity": "gold",
+      "description": "Your Abilities mark enemies, causing them to take additional magic damage from your ally's next Attack or Ability.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/searingdawn_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "shadow-runner",
+      "name": "Shadow Runner",
+      "rarity": "silver",
+      "description": "After using a dash, leap, blink, or teleport Ability or exiting Stealth, gain … Move Speed for … seconds.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/shadowrunner_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "shark-bait",
+      "name": "Shark Bait",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/fishbait_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "shrink-engine",
+      "name": "Shrink Engine",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/shrinkengine_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "shrink-ray",
+      "name": "Shrink Ray",
+      "rarity": "gold",
+      "description": "Your Attacks reduce the target's damage and size by …% {{ Item_Keyword_OnHit }}.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/shrinkray_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "siphon",
+      "name": "Siphon",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/genericabilityaugmenticon_silver.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "skilled-sniper",
+      "name": "Skilled Sniper",
+      "rarity": "gold",
+      "description": "Hitting an enemy with a non-Ultimate Ability at far range drastically reduces its Cooldown.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/skilledsniper_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "slap-around",
+      "name": "Slap Around",
+      "rarity": "silver",
+      "description": "Each time you Immobilize or Ground an enemy, gain %i:miniAdaptiveForce% … Adaptive Force for the round.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/slaparound_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "slime-time",
+      "name": "Slime Time",
+      "rarity": "silver",
+      "description": "Every few seconds, Autocast a burst of slime from your body, dealing magic damage to nearby enemies. If you hit a champion, secrete a blob that heals you when walked over.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/slimetime_small.png",
+      "source": "CommunityDragon KIWI",
+      "introducedPatch": "26.23"
+    },
+    {
+      "id": "snap-back",
+      "name": "Snap Back",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/genericabilityaugmenticon_gold.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "sneakerhead",
+      "name": "Sneakerhead",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/sneakerhead_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "snowblast",
+      "name": "Snowblast",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/snowbomb_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "snowday",
+      "name": "Snowday",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/snowday_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "sonata",
+      "name": "Sonata",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/sonata_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "sonic-boom",
+      "name": "Sonic Boom",
+      "rarity": "silver",
+      "description": "Buffing, Healing, or Shielding your ally deals damage and Slows enemies surrounding them.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/sonicboom_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "soul-eater",
+      "name": "Soul Eater",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/souleater_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "soul-siphon",
+      "name": "Soul Siphon",
+      "rarity": "gold",
+      "description": "Heal for …% of damage done by Critical Strikes. Gain %i:scaleCrit% …% Crit chance.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/soulsiphon_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "sound-barrier",
+      "name": "Sound Barrier",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/swiftandsafe_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "spell-split",
+      "name": "Spell Split",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/genericabilityaugmenticon_prismatic.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "spin-me-right-round",
+      "name": "Spin Me Right Round",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/youspinmerightround_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "spin-to-win",
+      "name": "Spin To Win",
+      "rarity": "silver",
+      "description": "Your spin Abilities gain … Ability Haste and deal …% more damage!",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/spintowin_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "spirit-bomb",
+      "name": "Spirit Bomb",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/spiritbomb_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "squishy-slappy-grab",
+      "name": "Squishy Slappy Grab",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/squishyslappygrab_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "stackosaurus-rex",
+      "name": "Stackosaurus Rex",
+      "rarity": "silver",
+      "description": "When you gain permanent Stacks of an Ability, gain …% more!",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/stackosaurusrex_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "stats-on-stats-on-stats",
+      "name": "Stats on Stats on Stats!",
+      "rarity": "prismatic",
+      "description": "Gain … %i:StatAnvil% Stat Anvils!",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/statsonstatsonstats_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "stats-on-stats",
+      "name": "Stats on Stats!",
+      "rarity": "gold",
+      "description": "Gain … %i:StatAnvil% Stat Anvils!",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/statsonstats_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "stats",
+      "name": "Stats!",
+      "rarity": "silver",
+      "description": "Gain … %i:StatAnvil% Stat Anvils!",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/stats_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "stay-resolute",
+      "name": "Stay Resolute",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/genericabilityaugmenticon_silver.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "steadfaster-presence",
+      "name": "Steadfaster Presence",
+      "rarity": "gold",
+      "description": "Gain bonus Armor, Magic Resist, and Tenacity. This bonus increases below 40% maximum Health.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/steadfastpresence_small.png",
+      "source": "CommunityDragon KIWI",
+      "introducedPatch": "26.23"
+    },
+    {
+      "id": "steel-your-heart",
+      "name": "Steel Your Heart",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/quest_steelyourheart_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "still-here",
+      "name": "Still Here",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/stillhere_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "stuck-in-here-with-me",
+      "name": "Stuck In Here With Me",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/stuckinherewithme_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "swift-and-safe",
+      "name": "Swift and Safe",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/swiftandsafe_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "symphony-of-war",
+      "name": "Symphony of War",
+      "rarity": "prismatic",
+      "description": "Gain the Lethal Tempo and Conqueror Keystone Runes.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/symphonyofwar_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "take-em-down-down-down",
+      "name": "Take'em Down Down Down",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/takeemdowndowndown_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "tank-engine",
+      "name": "Tank Engine",
+      "rarity": "gold",
+      "description": "Gain increased size and percent bonus Health per takedown.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/tank_engine_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "tank-it-or-leave-it",
+      "name": "Tank It Or Leave It",
+      "rarity": "silver",
+      "description": "You can Critically Defend using your Crit Chance (max …% chance), giving you a chance to reduce damage. Gain %i:scaleCrit% …% Crit Chance.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/tankitorleaveit_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "tap-dancer",
+      "name": "Tap Dancer",
+      "rarity": "prismatic",
+      "description": "Your Attacks grant you … Move Speed {{ Item_Keyword_OnHit }}. Gain Attack Speed equal to …% of your Move Speed.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/tapdancer_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "terrain-d",
+      "name": "Terrain'd",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/lightningstrikes_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "terror",
+      "name": "Terror",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/desecrator_large.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "the-boom-and-the-bass",
+      "name": "The Boom and the Bass",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/theboomandthebass_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "third-times-the-harm",
+      "name": "Third Times the Harm",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/silverbeats_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "thrash",
+      "name": "THRASH",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/pentakill_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "thread-the-needle",
+      "name": "Thread the Needle",
+      "rarity": "gold",
+      "description": "Gain …% %i:scaleAPen% Armor Penetration and %i:scaleMPen% Magic Penetration.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/threadtheneedle_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "tickle-monster",
+      "name": "Tickle Monster",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/ticklemonster_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "titan-s-resolve",
+      "name": "Titan's Resolve",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/iamthejuggernaut_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "tooth-fairy",
+      "name": "Tooth Fairy",
+      "rarity": "gold",
+      "description": "Bursting enemies drops Teeth. Picking up Teeth grants permanent Lethality and Magic Penetration.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/questburstingteeth_small.png",
+      "source": "CommunityDragon KIWI",
+      "introducedPatch": "26.12",
+      "availableFromPatch": "26.23"
+    },
+    {
+      "id": "totentanz",
+      "name": "Totentanz",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/totentanz_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "transmute-chaos",
+      "name": "Transmute: Chaos",
+      "rarity": "prismatic",
+      "description": "Gain … random %i:Augment%Augments.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/transmutechaos_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "transmute-gold",
+      "name": "Transmute: Gold",
+      "rarity": "silver",
+      "description": "Gain a random %i:Augment% Gold Augment.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/transmutegold_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "transmute-prismatic",
+      "name": "Transmute: Prismatic",
+      "rarity": "gold",
+      "description": "Gain a random %i:Augment% Prismatic Augment.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/transmuteprismatic_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "triggered-inferno",
+      "name": "Triggered Inferno",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/madscientist_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "tripleshot",
+      "name": "Tripleshot",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/genericabilityaugmenticon_prismatic.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "trusty-weapon",
+      "name": "Trusty Weapon",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/genericabilityaugmenticon_silver.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "twin-fire",
+      "name": "Twin Fire",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/twinfire_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "typhoon",
+      "name": "Typhoon",
+      "rarity": "silver",
+      "description": "Your Attacks fire a bolt at an additional target dealing reduced damage and applying {{ Item_Keyword_OnHit }} effects.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/typhoon_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "ultimate-awakening",
+      "name": "Ultimate Awakening",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/zerohour_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "ultimate-recursion",
+      "name": "Ultimate Recursion",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/zealot_large.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "ultimate-revolution",
+      "name": "Ultimate Revolution",
+      "rarity": "prismatic",
+      "description": "Once per round, refresh your Ultimate after casting it.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/ultimaterevolution_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "ultimate-unstoppable",
+      "name": "Ultimate Unstoppable",
+      "rarity": "silver",
+      "description": "After using your Ultimate, you become immune to crowd control for … seconds. (… second Cooldown).",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/ultimateunstoppable_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "ultra-hydra",
+      "name": "Ultra Hydra",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/ultrahydra_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "upgrade-collector",
+      "name": "Upgrade Collector",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/upgradecollector_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "upgrade-death-s-dance",
+      "name": "Upgrade Death's Dance",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/upgradedeathdance_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "upgrade-immolate",
+      "name": "Upgrade Immolate",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/upgradeimmolate_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "upgrade-infinity-edge",
+      "name": "Upgrade Infinity Edge",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/upgradeie_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "upgrade-ravenous-hydra",
+      "name": "Upgrade Ravenous Hydra",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/upgradesheen_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "upgrade-sheen",
+      "name": "Upgrade Sheen",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/upgradesheen_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "upgrade-stormsurge",
+      "name": "Upgrade Stormsurge",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/upgradehubris_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "upgrade-sundered-sky",
+      "name": "Upgrade Sundered Sky",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/upgradeie_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "upgrade-sword-of-blossoming-dawn",
+      "name": "Upgrade Sword of Blossoming Dawn",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/upgrademikaelsblessing_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "upgrade-zhonya-s",
+      "name": "Upgrade Zhonya's",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/upgradezh_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "urf-s-champion",
+      "name": "Urf's Champion",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/quest_urfschampion_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "veil-of-warding",
+      "name": "Veil of Warding",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/poltergeist_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "vulnerability",
+      "name": "Vulnerability",
+      "rarity": "gold",
+      "description": "Your Item and damage over time effects can Critically Strike. Gain %i:scaleCrit% …% Crit chance.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/vulnerability_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "warlock-juicebox",
+      "name": "Warlock Juicebox",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/warlockjuicebox_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "weapon-of-destiny",
+      "name": "Weapon of Destiny",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/protagonistssignatureweapon_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "wee-woo-wee-woo",
+      "name": "Wee Woo Wee Woo",
+      "rarity": "gold",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/weewooweewoo_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "windspeaker-s-blessing",
+      "name": "Windspeaker's Blessing",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/windspeakersblessing_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "witchful-thinking",
+      "name": "Witchful Thinking",
+      "rarity": "silver",
+      "description": "Gain %i:scaleAP% … Ability Power.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/witchfulthinking_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "with-haste",
+      "name": "With Haste",
+      "rarity": "gold",
+      "description": "Gain Move Speed equal to …% of your Ability Haste.",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/withhaste_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "wooglet-s-witchcap",
+      "name": "Wooglet's Witchcap",
+      "rarity": "prismatic",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/cherry/augments/icons/quest_woogletswitchcap_small.png",
+      "source": "CommunityDragon KIWI"
+    },
+    {
+      "id": "zealot",
+      "name": "Zealot",
+      "rarity": "silver",
+      "description": "",
+      "imageUrl": "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ux/kiwi/augments/icons/zealot_small.png",
+      "source": "CommunityDragon KIWI"
+    }
+  ],
+  "gameVersion": "16.23.1",
+  "patch": "26.23",
+  "generatedAt": "2026-11-21T05:51:07+00:00"
 }
