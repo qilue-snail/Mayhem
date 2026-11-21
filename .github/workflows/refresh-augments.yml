@@ -1,0 +1,64 @@
+name: Deploy Mayhem and refresh live augments
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: mayhem-pages
+  cancel-in-progress: false
+
+jobs:
+  refresh-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install automatic augment loader in existing site
+        # Idempotent: does not replace editor, layouts, or sharing code.
+        run: |
+          python3 install_auto_augments.py
+          node --check app.js
+      - name: Refresh full KIWI augment roster from Riot game data
+        # The public website should still deploy when CommunityDragon is temporarily down.
+        continue-on-error: true
+        run: python3 scripts/update_augment_roster.py
+      - name: Save augmented app.js and changed roster to GitHub
+        # GitHub's GITHUB_TOKEN pushes do not themselves trigger a Pages rebuild;
+        # this SAME job deploys the refreshed snapshot below.
+        # A failed push must be visible: otherwise a later commit could revert the installer.
+        run: |
+          if git diff --quiet -- app.js data/live-augments.json; then
+            echo 'No app or roster changes to commit.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add app.js data/live-augments.json
+          git commit -m 'Automatically load and refresh current KIWI augments'
+          git push origin HEAD:main
+      - name: Assemble public static site
+        run: |
+          mkdir -p _site/data
+          cp index.html styles.css app.js _site/
+          cp data/live-augments.json _site/data/
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - name: Publish site to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
