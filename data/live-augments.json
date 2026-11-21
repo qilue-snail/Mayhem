@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "source": "Seed entries; GitHub Actions replaces this file with the full current KIWI roster",
+  "patch": "26.23",
+  "augments": [
+    {"id":"fortified","name":"Fortified","rarity":"silver","introducedPatch":"26.23","description":"Gain 20 Armor, then increase your bonus Armor by 25%."},
+    {"id":"mystic-guard","name":"Mystic Guard","rarity":"silver","introducedPatch":"26.23","description":"Gain 20 Magic Resist, then increase your bonus Magic Resist by 25%."},
+    {"id":"slime-time","name":"Slime Time","rarity":"silver","introducedPatch":"26.23","description":"Every few seconds, Autocast a burst of slime from your body, dealing magic damage to nearby enemies. If you hit a champion, secrete a blob that heals you when walked over."},
+    {"id":"steadfaster-presence","name":"Steadfaster Presence","rarity":"gold","introducedPatch":"26.23","description":"Gain bonus Armor, Magic Resist, and Tenacity. This bonus increases below 40% maximum Health."},
+    {"id":"tooth-fairy","name":"Tooth Fairy","rarity":"gold","introducedPatch":"26.12","availableFromPatch":"26.23","description":"Bursting enemies drops Teeth. Picking up Teeth grants permanent Lethality and Magic Penetration."}
+  ]
+}
